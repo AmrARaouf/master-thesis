@@ -69,15 +69,19 @@
 \selectlanguage{english}
 \begin{abstract}
 
-%abstract english
+Recent advances in Convolutional Neural Networks (CNN) have been able to conquer Computer Vision tasks and even surpass human performance. CNN algorithms are characteristically data-hungry, and obtaining domain-specific labeled data is often a cumbersome manual resource-heavy task. In this text we explore the use of synthetic data to train a CNN to perform image classification of different fasteners.
 
 \textit{Note:}
 
 \textit{\textbf{1. paragraph:} What is the motivation of your thesis? Why is it interesting from a scientific point of view? Which main problem do you like to solve?}
 
+The motivation for my thesis stems from CNN algorithms' hunger for labeled images in order to train for classification tasks and produce performant results. Obtaining a large corpus of labeled images is a difficult task, especially when we wish to train a network to classify a domain-specific dataset.
+
 \textit{\textbf{2. paragraph:} What is the purpose of the document? What is the main content, the main contribution?}
+In this document we explore the use of synthetic images to augment the training data for a given CNN. We explore the power of synthetic data to produce acceptable results while using as little real data as possible. The intuition comes from the ease of rendering a large synthetic dataset on demand.
 
 \textit{\textbf{3. paragraph:} What is your methodology? How do you proceed?}
+We explore the ratio of synthetic to real images that can be used for training a CNN and obtain good results.
 
 \end{abstract}
 
@@ -149,18 +153,21 @@
 
 \textit{Note: Describe each proven technology / concept shortly that is important to understand your thesis. Point out why it is interesting for your thesis. Make sure to incorporate references to important literature here.}
 
-\section{e.g. User Feedback}
+\section{Supervised Machine Learning}
+\subsection{Overview}
+\subsection{Image Classification}
 
-\textit{Note: This section would summarize the concept User Feedback using definitions, historical overviews and pointing out the most important aspects of User Feedback.}
+\section{Deep Neural Networks}
 
-\section{e.g. Representational State Transfer}
+\section{Convolutional Neural Networks (CNNs)}
+\subsection{CNN Building Blocks}
+\subsection{CNN Architectures}
+\subsubsection{VGG16}
+\subsubsection{VGG19}
+\subsubsection{Resnet}
+\subsubsection{Inception}
 
-\textit{Note: This section would summarize the architectural style Representational State Transfer (REST) using definitions, historical overviews and pointing out the most important aspects of the architecture.}
-
-\section{e.g. Scrum}
-
-\textit{Note: This section would summarize the agile method Scrum using definitions, historical overviews and pointing out the most important aspects of Scrum.}
-
+\section{Small Mechanical Part Classification}
 
 
 %------- chapter 3 -------
@@ -169,47 +176,55 @@
 
 \textit{Note: Describe related work regarding your topic and emphasize your (scientific) contribution in \textbf{contrast} to existing approaches / concepts / workflows. Related work is usually current research by others and you defend yourself against the statement: ``Why is your thesis relevant? The problem was already solved by XYZ.'' If you have multiple related works, use subsections to separate them.}
 
-
+\section{CNN based Image Classification}
+\section{Image Classification using Synthetic Images}
 
 
 %------- chapter 4 -------
 
 \chapter{Requirements Analysis}
 
-\textit{Note: This chapter follows the Requirements Analysis Document Template in \cite{bruegge2004object}. 
-\textbf{Important:} Make sure that the whole chapter is independent of the chosen technology and development platform. The idea is that you illustrate concepts, taxonomies and relationships of the application domain independent of the solution domain!
-Cite \cite{bruegge2004object} several times in this chapter.}
+%\textit{Note: This chapter follows the Requirements Analysis Document Template in \cite{bruegge2004object}. 
+%\textbf{Important:} Make sure that the whole chapter is independent of the chosen technology and development platform. The idea is %that you illustrate concepts, taxonomies and relationships of the application domain independent of the solution domain!
+%Cite \cite{bruegge2004object} several times in this chapter.}
 
 \section{Overview}
 
-\textit{Note: Provide a short overview about the purpose, scope, objectives and success criteria of the system that you like to develop.}
+Our goal is to develop a system that classifies images of different small mechanical parts, and to do so as accurately as possible. To realize this goal, we decide to leverage state-of-the-art advancements in Convolutional Neural Network algorithms in the field of computer vision, and more specifically, the sub-field of image classification.
 
-\section{Current System}
+We aim to build a system that scales up well, ie. we would like the classification system to easily adapt new small mechanical parts. Moreover we would like to build a system that can scale up to around 10,000 classes.
 
-\textit{Note: This section is only required if the proposed system (i.e. the system that you develop in the thesis) should replace an existing system.}
+CNN algorithms are characteristically data-hungry. The classification accuracy of a CNN algorithm is proportional to the amount of images that are fed in as input. Given the large number of classes, the task of collecting images of each small mechanical part becomes time-consuming and labour-intensive. To combat this problem, we decide to augment the training data of our algorithms with \textit{synthetic images}: 2-dimentional renditions of 3-dimensional computerized graphical models of the small mechanical parts. We hypothesize that our synthetically augmented training set will yield a higher accuracy, whilst minimizing the manual effort needed to take real images of the small mechanical parts.
 
-\section{Proposed System}
-
-\textit{Note: If you leave out the section ``Current system'', you can rename this section into ``Requirements''.}
+\section{Requirements}
 
 \subsection{Functional Requirements}
 
-\textit{Note: List and describe all functional requirements of your system. Also mention requirements that you were not able to realize. The short title should be in the form ``verb objective''}
+Functional requirements (FRs) describe the interactions between the system and the its environment independent of its implementation. \cite{bruegge2004object}.
+
+The system's main function is to classify images of different small mechanical parts. Furthermore, the system needs to be dynamic and scalable to accomodate new small mechanical parts. To ensure that the system is able to classify images accurately, while leveraging synthetic input images, we introduce the folloing Functional Requirements.
 
 \begin{itemize}
-\item [FR1] \textbf{Short Title}: Short Description.
-\item [FR2] \textbf{Short Title}: Short Description.
-\item [FR3] \textbf{Short Title}: Short Description.
+\item [FR1] \textbf{Generate Synthetic Images}: Given a 3D model of a small mechanical part, the system should generate a set of synthetic images of said model. The system should apply a set of random transformations to the 3D model before rendering the 2D synthetic image to ensure that the generated dataset captures the SMP from as many angles in as many positions as possible.
+
+\item [FR2] \textbf{Add New Class to Image Classifier}: The system should accomodate the addition of a new SMP to the classifier. This extends to the ability of the system to accomodate for new input training data, and the ability to label a new output class
+
+\item [FR3] \textbf{Adjust input data split}: The system should allow for changes in the training, validation and testing input data which is assigned as input to the image classifier. This includes changing the number of images in each set and manipulating the ratio of synthetic to real images in the training split.
+
+\item [FR4] \textbf{Retrain Image Classifier}: The system should be dynamic enough to retrain the image classifier. This step is usually taken after the augmenting or adjustment of the input data split.
+
+\item [FR5] \textbf{Fine-Tune Image Classifier}: The underlying CNN algorithm should be subject to fine-tuning in order to maximize the accuracy of the system.
 \end{itemize}
 
 \subsection{Nonfunctional Requirements}
 
-\textit{Note: List and describe all nonfunctional requirements of your system. Also mention requirements that you were not able to realize. Categorize them using the FURPS+ model described in \cite{bruegge2004object} without the category \textbf{functionality} that was already covered with the functional requirements.}
+Nonfunctional Requirements (NFRs) are key system requirements that apply to the system as a whole. To maintain the system's general requirements we define the following nonfunctional requirements.
 
 \begin{itemize}
-\item [NFR1] \textbf{Category}: Short Description.
-\item [NFR2] \textbf{Category}: Short Description.
-\item [NFR3] \textbf{Category}: Short Description.
+\item [NFR1] \textbf{Performance}: A performence requirement is the measure of a quantifiable attribute of our system. In our case we would like to track our system's \textbf{classification accuracy}.\\
+We first specify our system's accuracy for a single class to be the percentage of the given class's testing image split that the image classifier correctly predicts. We consequently define our system's classification accuracy to be the image classifier's average prediction accuracy over each class.
+
+\item [NFR2] \textbf{Adaptability}: Adaptability is the ability to change the system to deal with additional application domain concepts \cite{bruegge2004object}. Our system needs to be dynamic enough to accomodate for new small mechanical parts that can be later added even after the system has been deployed.
 \end{itemize}
 
 \section{System Models}
@@ -241,11 +256,6 @@ Cite \cite{bruegge2004object} several times in this chapter.}
 \subsection{Dynamic Model}
 
 \textit{Note: This subsection should contain dynamic UML diagrams. These can be a UML state diagrams, UML communication diagrams or UML activity diagrams.\textbf{Important:} Make sure to describe the diagram and its rationale in the text. \textbf{Do not use UML sequence diagrams.}}
-
-\subsection{User Interface}
-
-\textit{Note: Show mockups of the user interface of the software you develop and their connections / transitions. You can also create a storyboard. \textbf{Important:} Describe the mockups and their rationale in the text.}
-
 
 
 %------- chapter 5 -------
