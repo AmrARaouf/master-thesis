@@ -7,6 +7,7 @@
 \usepackage[pdftex]{graphicx}
 \usepackage[hang,small,bf]{caption}
 \usepackage{styles/tum}
+\usepackage{styles/usecases}
 \usepackage{setspace}
 \usepackage[german,english]{babel}
 \usepackage{float}
@@ -229,12 +230,122 @@ We first specify our system's accuracy for a single class to be the percentage o
 
 \section{System Models}
 
-\textit{Note: This section includes important system models for the requirements analysis.}
-
 \subsection{Use Case Model}
 
-\textit{Note: This subsection should contain a UML Use Case Diagram including roles and their use cases. You can use colors to indicate priorities. Think about splitting the diagram into multiple ones if you have more than 10 use cases.
-\textbf{Important:} Make sure to describe the most important use cases using the use case table template. Also describe the rationale of the use case model, i.e. why you modeled it like you show it in the diagram.}
+Use case models represent the relationship between the user group of a system and the general functions that they can execute. A use case model can reduce the complexity of a system and increase its understandability.
+
+The use case model of our system can be found as figure \ref{fig:UseCaseModel}. The main protagonist of our system is the mechanical engineer who is tasked with training the system to classify a set of small mechanical parts.
+
+\begin{figure}[t]
+\centering
+  \includegraphics[width=\textwidth]{UseCaseModel}
+\caption{system use case model}
+\label{fig:UseCaseModel}
+\end{figure}
+
+The use case model can be divided into 3 main functions; namely generating synthetic images, obtaining real images, and training an image classifier.
+
+\subsubsection{Generating Synthetic Images}
+
+Generating synthetic images the cornerstone for a synthetically augmented dataset. There's a lot of work that goes into generating the 3D synthetic scene and the corresponding renditions. To increase the understandability of our model, we have separated the the use case that revolve around modeling the SMP 3D model itself as \textit{Specify3DModelTransformations}, and the use case that deals with the synthetic scene environment as \textit{SetUpSyntheticScene}.
+
+\begin{usecase}
+  \addtitle{Use Case}{Specify3DModelTransformations}
+
+  \addfield{Participating Actors}{MechanicalEngineer}
+
+  \addscenario{Flow of Events}{
+    \item In the modeling software, the MechanicalEngineer chooses the transformations that are applicable to the small mechanical part's 3D model.
+    \item For each transformation, the MechanicalEngineer sets the range of each tranformation attribute that will be later used to generate a random position for the synthetic image of the SMP.
+  }
+
+  \addfield{Entry Condition}{MechanicalEngineer has modeling software open.}
+
+  \addfield{Exit Condition}{All the desired transformations and their corresponding attributes have been specified.}
+
+  \additemizedfield{Quality Requirements}{
+    \item In the effort to achieve the Performance Non-Functional requirement, synthetic images have to look as photo realistic as possible. The 3D transformations should strive to output the range of positions that the respective SMP can be placed in.
+  }
+\end{usecase}
+
+\begin{usecase}
+  \addtitle{Use Case}{SetUpSyntheticScene}
+
+  \addfield{Participating Actors}{MechanicalEngineer}
+
+  \addscenario{Flow of Events}{
+    \item In the modeling software, the MechanicalEngineer places the 3D model of the SMP on a horizontal plane as if lying on a table.
+    \item The MechanicalEngineer sets the background of the horizontal plane to mimic the background of the real images in the dataset.
+    \item The MechanicalEngineer sets the lighting condition of the scene to reflect the lighting condition of the environment where the real SMP images are taken.
+  }
+
+  \addfield{Entry Condition}{MechanicalEngineer has modeling software open.}
+
+  \addfield{Exit Condition}{In the modeling software, the 3D model of the SMP should be lying on a horizontal plane with a background and lighting condition that reflect the environment of the real SMP images.}
+
+  \additemizedfield{Quality Requirements}{
+    \item The synthetic scene should look as photorealistic as possible. This helps the Image Classifier achieve a higher classification accuracy using the synthetic images.
+  }
+\end{usecase}
+
+\begin{usecase}
+  \addtitle{Use Case}{GenerateSyntheticImages}
+
+  \addfield{Participating Actors}{MechanicalEngineer}
+
+  \addscenario{Flow of Events}{
+    \item The MechanicalEngineer specifies the desired number of output synthetic images.
+    \item The modeling software generates the desired number of output synthetic images. Each image is a rendition of the scene after the transformations have been applied to the 3D model.
+  }
+
+  \addfield{Entry Condition}{MechanicalEngineer has modeling software open.}
+
+  \addfield{Exit Condition}{The MechanicalEngineer obtains a set of synthetic images for the specified SMP that can be later used to train the Image Classifier.}
+\end{usecase}
+
+\subsubsection{Obtaining Real Images}
+
+\begin{usecase}
+  \addtitle{Use Case}{TakeRealImages}
+
+  \addfield{Participating Actors}{MechanicalEngineer}
+
+  \addscenario{Flow of Events}{
+    \item The MechanicalEngineer places the camera over a plane.
+    \item The MechanicalEngineer sets the SMP over the plane in a random position, such that the full SMP body is within the viewfield of the camera.
+    \item The MechanicalEngineer takes a picture of the SMP.
+    \item The MechanicalEngineer repeats steps 2 and 3 until the desired number of real images of the SMP is reached.
+    \item The MechanicalEngineer resizes the images to correspond to the input image size of the Image Classifier. 
+  }
+
+  \addfield{Entry Condition}{}
+
+  \addfield{Exit Condition}{The MechanicalEngineer obtains a set of real images for the specified SMP that can be later used to train the Image Classifier.}
+
+  \additemizedfield{Quality Requirements}{
+    \item The lighting of the environment should eliminate shadows and light reflections on the SMP surface.
+  }
+\end{usecase}
+
+\subsubsection{Training the Image Classifier}
+
+Training the image classifier requires some underlying work. We have chosen to model this use case as one that includes setting up the input data and configuring the image classifier (modeled as \textit{SetInputDataSplit} and \textit{SetUpImageClassifier} respectively).
+
+\begin{usecase}
+  \addtitle{Use Case}{TrainImageClassifier}
+
+  \addfield{Participating Actors}{MechanicalEngineer}
+
+  \addscenario{Flow of Events}{
+    \item The MechanicalEngineer configures the dataset structure: number of images for training, validation and testing, as well as the ratio of real to synthetic images in the training split.
+    \item The MechanicalEngineer chooses a convolutional neural network architecture for the Image Classifier.
+    \item The MechanicalEngineer fine-tunes the CNN by manipulating its hyperparameters.
+  }
+
+  \addfield{Entry Condition}{For each SMP set to be classified by the Image Classifier, the corresponding real and synthetic images should be generated and ready for use.}
+
+  \addfield{Exit Condition}{The Image Classifier outputs the maximum possible accuracy given the input dataset.}
+\end{usecase}
 
 \subsection{Analysis Object Model}
 
