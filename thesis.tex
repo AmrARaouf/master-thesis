@@ -234,15 +234,15 @@ Functional requirements (FRs) describe the interactions between the system and t
 The system's main function is to classify images of different small mechanical parts. Furthermore, the system needs to be dynamic and scalable to accomodate new small mechanical parts. To ensure that the system is able to classify images accurately, while leveraging synthetic input images, we introduce the folloing Functional Requirements.
 
 \begin{itemize}
-\item [FR1] \textbf{Generate Synthetic Images}: Given a 3D model of a small mechanical part, the system should generate a set of synthetic images of said model. The system should apply a set of random transformations to the 3D model before rendering the 2D synthetic image to ensure that the generated dataset captures the SMP from as many angles in as many positions as possible.
+  \item [FR1] \textbf{Generate Synthetic Images}: Given a 3D model of a small mechanical part, the system should generate a set of synthetic images of said model. The system should apply a set of random transformations to the 3D model before rendering the 2D synthetic image to ensure that the generated dataset captures the SMP from as many angles in as many positions as possible.
 
-\item [FR2] \textbf{Add New Class to Image Classifier}: The system should accomodate the addition of a new SMP to the classifier. This extends to the ability of the system to accomodate for new input training data, and the ability to label a new output class
+  \item [FR2] \textbf{Add New Class to Image Classifier}: The system should accomodate the addition of a new SMP to the classifier. This extends to the ability of the system to accomodate for new input training data, and the ability to label a new output class
 
-\item [FR3] \textbf{Adjust input data split}: The system should allow for changes in the training, validation and testing input data which is assigned as input to the image classifier. This includes changing the number of images in each set and manipulating the ratio of synthetic to real images in the training split.
+  \item [FR3] \textbf{Adjust input data split}: The system should allow for changes in the training, validation and testing input data which is assigned as input to the image classifier. This includes changing the number of images in each set and manipulating the ratio of synthetic to real images in the training split.
 
-\item [FR4] \textbf{Retrain Image Classifier}: The system should be dynamic enough to retrain the image classifier. This step is usually taken after the augmenting or adjustment of the input data split.
+  \item [FR4] \textbf{Retrain Image Classifier}: The system should be dynamic enough to retrain the image classifier. This step is usually taken after the augmenting or adjustment of the input data split.
 
-\item [FR5] \textbf{Fine-Tune Image Classifier}: The underlying CNN algorithm should be subject to fine-tuning in order to maximize the accuracy of the system.
+  \item [FR5] \textbf{Fine-Tune Image Classifier}: The underlying CNN algorithm should be subject to fine-tuning in order to maximize the accuracy of the system.
 \end{itemize}
 
 \subsection{Nonfunctional Requirements}
@@ -250,10 +250,10 @@ The system's main function is to classify images of different small mechanical p
 Nonfunctional Requirements (NFRs) are key system requirements that apply to the system as a whole. To maintain the system's general requirements we define the following nonfunctional requirements.
 
 \begin{itemize}
-\item [NFR1] \textbf{Performance}: A performence requirement is the measure of a quantifiable attribute of our system. In our case we would like to track our system's \textbf{classification accuracy}.\\
-We first specify our system's accuracy for a single class to be the percentage of the given class's testing image split that the image classifier correctly predicts. We consequently define our system's classification accuracy to be the image classifier's average prediction accuracy over each class.
+  \item [NFR1] \textbf{Performance}: A performence requirement is the measure of a quantifiable attribute of our system. In our case we would like to track our system's \textbf{classification accuracy}.\\
+  We first specify our system's accuracy for a single class to be the percentage of the given class's testing image split that the image classifier correctly predicts. We consequently define our system's classification accuracy to be the image classifier's average prediction accuracy over each class.
 
-\item [NFR2] \textbf{Adaptability}: Adaptability is the ability to change the system to deal with additional application domain concepts \cite{bruegge2004object}. Our system needs to be dynamic enough to accomodate for new small mechanical parts that can be later added even after the system has been deployed.
+  \item [NFR2] \textbf{Adaptability}: Adaptability is the ability to change the system to deal with additional application domain concepts \cite{bruegge2004object}. Our system needs to be dynamic enough to accomodate for new small mechanical parts that can be later added even after the system has been deployed.
 \end{itemize}
 
 \section{System Models}
