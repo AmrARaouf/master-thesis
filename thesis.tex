@@ -262,13 +262,13 @@ Nonfunctional Requirements (NFRs) are key system requirements that apply to the 
 
 Use case models represent the relationship between the user group of a system and the general functions that they can execute. A use case model can reduce the complexity of a system and increase its understandability.
 
-The use case model of our system can be found as figure \ref{fig:UseCaseModel}. The main protagonist of our system is the mechanical engineer who is tasked with training the system to classify a set of small mechanical parts.
+The use case model of our system can be found as figure \ref{fig:UCM}. The main protagonist of our system is the mechanical engineer who is tasked with training the system to classify a set of small mechanical parts.
 
 \begin{figure}[t]
 \centering
-  \includegraphics[width=\textwidth]{UseCaseModel}
-\caption{system use case model}
-\label{fig:UseCaseModel}
+  \includegraphics[width=\textwidth]{UCM}
+\caption{Use Case Model}
+\label{fig:UCM}
 \end{figure}
 
 The use case model can be divided into 3 main functions; namely generating synthetic images, obtaining real images, and training an image classifier.
@@ -377,12 +377,47 @@ Training the image classifier requires some underlying work. We have chosen to m
 
 \subsection{Analysis Object Model}
 
+The analysis object model is a visual dictionary of the main concepts visible to the user \cite{bruegge2004object}. The analysis object model depicts a system's entites, their corresponding attributes and functions, and illustrates the relationship between said entitie. Figure \ref{fig:AOM} represents the analysis object model of our system.
+
 \begin{figure}[t]
 \centering
   \includegraphics[width=\textwidth]{AOM}
-\caption{system analysis object model}
+\caption{Analysis Object Model}
 \label{fig:AOM}
 \end{figure}
+
+\subsubsection{SmallMechanicalPart}
+A small mechanical part is the main subject of our system. It is an object that our system aims to classify. Each SMP has a unique identifying label string.
+
+\subsubsection{3DModel}
+A 3DModel of a small mechanical part is the graphical model which helps our system create synthetic images. Each SMP has a corresponding 3DModel. Each 3DModel has the same label as its SMP counterpart.
+
+\subsubsection{Transformation}
+Each SMP and 3DModel have a list of applicable transformations. A transformation is executed on an axis (x, y or z), and can either be a Translation or a Rotation.
+At image generation time, each transformation outputs a random value between its defined maximum and minimum. We define a range to limit an object's transformation. For instance, we don't want to translate an SMP so far as to remove it from the camera's viewfield.
+
+\subsubsection{ImageGenerator}
+ImageGenerator is the class that does the heavy lifting when it comes to creating images. It applies the random transformations on the target object and generates an image with a specified width and height.
+ImageGenerator is an abstraction of 2 classes. SyntheticImageGenerator is responsible for applying the transformations on 3Dmodels and generating SyntheticImages, while RealImageGenerator uses a camera to take pictures of small mechanical objects and output their corresponding RealImages.
+
+\subsubsection{Image}
+Image is a generalization of RealImage and SyntheticImage. Image stores information like width, height and label of the image. Moreover it contains a dataBuffer which contains the actual image pixel values.
+
+\subsubsection{Dataset}
+Dataset is a composition of Images. It is the image repository which is used by the ImageClassifier for training and evaluation.
+
+\subsubsection{DataSplitGenerator}
+DataSplitGenerator splits the Dataset into a training set, validation set and testing set. This split prepares the data for consumption by the ImageClassifier.
+
+\subsubsection{CNNModel}
+CNNModel is the convolutional neural network algorithm that is trained for image classification. CNNModel is an abstraction of 4 different CNN architectures, namely Inception, Resnet, VGG16 and VGG19. Furthermore, CNNModel defines the weights that are used to initialize the CNN to leverage the power of transfer learning. CNNModel also sets the number of trainable layers in a network to potentially preserve the initial weights and speed up training.
+
+\subsubsection{Optimizer}
+Each CNNModel has an Optimizer. An Optimizer is the function aims to close the gap between the model's predictions of the validation set labels and their corresponding ground truth. The Optimizer operates in the CNNModel's training phase. Optimizer is an abstraction of 2 different optimizers that we use in our system. Specifically SGD (Stochastic Gradient Descent), and Adam.
+
+\subsubsection{ImageClassifier}
+ImageClassifier orchestrates the feeding of data into the CNNModel for training. Moreover, it uses the testing set to calculate the accuracy of the trained model.
+
 
 \subsection{Dynamic Model}
 
