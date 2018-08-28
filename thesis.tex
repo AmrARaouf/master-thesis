@@ -264,7 +264,7 @@ Use case models represent the relationship between the user group of a system an
 
 The use case model of our system can be found as figure \ref{fig:UCM}. The main protagonist of our system is the mechanical engineer who is tasked with training the system to classify a set of small mechanical parts.
 
-\begin{figure}[t]
+\begin{figure}[h]
 \centering
   \includegraphics[width=\textwidth]{UCM}
 \caption{Use Case Model}
@@ -379,7 +379,7 @@ Training the image classifier requires some underlying work. We have chosen to m
 
 The analysis object model is a visual dictionary of the main concepts visible to the user \cite{bruegge2004object}. The analysis object model depicts a system's entites, their corresponding attributes and functions, and illustrates the relationship between said entitie. Figure \ref{fig:AOM} represents the analysis object model of our system.
 
-\begin{figure}[t]
+\begin{figure}[h]
 \centering
   \includegraphics[width=\textwidth]{AOM}
 \caption{Analysis Object Model}
@@ -421,8 +421,29 @@ ImageClassifier orchestrates the feeding of data into the CNNModel for training.
 
 \subsection{Dynamic Model}
 
-\textit{Note: UML activity diagrams. \textbf{Important:} Make sure to describe the diagram and its rationale in the text.}
+The dynamic model is focused on the behavior of the system. Sequence diagrams, activity diagrams and state machines are usually used to depict dynamic models \cite{bruegge2004object}. In this section we present 2 activity diagrams that depict the 2 main workflows of our system.
 
+\subsubsection{Dataset Generation}
+
+Figure \ref{fig:AD1} depicts the workflow of activities required to generate a dataset. The MechanicalEngineer selects a small mechanical part and its corresponding 3D model. The MechanicalEngineer then proceeds to generate the real and synthetic images. Finally the images are combined to form a dataset.
+
+\begin{figure}[h]
+\centering
+  \includegraphics[width=\textwidth]{AD1}
+\caption{Activity Diagram depicting the workflow required for Dataset generation}
+\label{fig:AD1}
+\end{figure}
+
+\subsubsection{Training the Image Classifier}
+
+Figure \ref{fig:AD2} describes the workflow of activities required to train the image classifier. The MechanicalEngineer splits the data into training, validation and testing sets. The MechanicalEngineer then creates a CNN model. Next the MechanicalEngineer feeds the training data to the CNN model to obtained a trained CNN model. The MechanicalEngineer then evaluates the trained CNN model accuracy using the testing set. If the accuracy of the trained CNN model is not sufficient, the CNN model is fine tuned and re-trained.
+
+\begin{figure}[h]
+\centering
+  \includegraphics[width=\textwidth]{AD2}
+\caption{Activity Diagram describing the workflow required to train the Image Classifier}
+\label{fig:AD2}
+\end{figure}
 
 
 
