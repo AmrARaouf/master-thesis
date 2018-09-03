@@ -140,7 +140,7 @@ Furthermore, the process of generating synthetic images gives full control of th
 
 \section{Objectives}
 
-The main objective of this thesis is to assess the use of synthetic data as input for CNN algorithms to perform image classification. We explore the use of a fully synthetic dataset and also a mixed dataset of both real and synthetic images with varying ratios.
+The main objective of this thesis is to assess the use of synthetic data as input for CNN algorithms to perform image classification. We explore the use of a fully synthetic dataset and also a mixed dataset of both real and synthetic images in varying ratios.
 
 \section{Outline}
 
@@ -220,7 +220,7 @@ The Evaluation chapter contains our expirement design and results. Lastly, the S
 
 Our goal is to develop a system that classifies images of different small mechanical parts (SMPs), and to do so as accurately as possible. To realize this goal, we decide to leverage state-of-the-art advancements in Convolutional Neural Network algorithms in the field of computer vision, and more specifically, the sub-field of image classification.
 
-We aim to build a system that scales up well, ie. we would like the classification system to easily adapt new small mechanical parts. Moreover we would like to build a system that can scale up to around 10,000 classes.
+We aim to build a system that scales up well, ie. we would like the classification system to easily adapt new small mechanical parts. Moreover we would like to build a system that can scale up to thousends of classes.
 
 CNN algorithms are characteristically data-hungry. The classification accuracy of a CNN algorithm is proportional to the amount of images that are fed in as input. Given the large number of classes, the task of collecting images of each small mechanical part becomes time-consuming and labour-intensive. To combat this problem, we decide to augment the training data of our algorithms with \textit{synthetic images}: 2-dimentional renditions of 3-dimensional computerized graphical models of the small mechanical parts. We hypothesize that our synthetically augmented training set will yield a higher accuracy, whilst minimizing the manual effort needed to take real images of the small mechanical parts.
 
@@ -230,12 +230,12 @@ CNN algorithms are characteristically data-hungry. The classification accuracy o
 
 Functional requirements (FRs) describe the interactions between the system and the its environment independent of its implementation. \cite{bruegge2004object}.
 
-The system's main function is to classify images of different small mechanical parts. Furthermore, the system needs to be dynamic and scalable to accomodate new small mechanical parts. To ensure that the system is able to classify images accurately, while leveraging synthetic input images, we introduce the folloing Functional Requirements.
+The system's main function is to classify images of different small mechanical parts. Furthermore, the system needs to be dynamic and scalable to accomodate new small mechanical parts. To ensure that the system is able to classify images accurately, while leveraging synthetic input images, we introduce the following Functional Requirements.
 
 \begin{itemize}
   \item [FR1] \textbf{Generate Synthetic Images}: Given a 3D model of a small mechanical part, the system should generate a set of synthetic images of said model. The system should apply a set of random transformations to the 3D model before rendering the 2D synthetic image to ensure that the generated dataset captures the SMP from as many angles in as many positions as possible.
 
-  \item [FR2] \textbf{Add New Class to Image Classifier}: The system should accomodate the addition of a new SMP to the classifier. This extends to the ability of the system to accomodate for new input training data, and the ability to label a new output class
+  \item [FR2] \textbf{Add New Class to Image Classifier}: The system should accomodate the addition of a new SMP to the classifier. This extends to the ability of the system to accomodate for new input training data, and the ability to label a new output class.
 
   \item [FR3] \textbf{Adjust input data split}: The system should allow for changes in the training, validation and testing input data which is assigned as input to the image classifier. This includes changing the number of images in each set and manipulating the ratio of synthetic to real images in the training split.
 
@@ -261,7 +261,7 @@ Nonfunctional Requirements (NFRs) are key system requirements that apply to the 
 
 Use case models represent the relationship between the user group of a system and the general functions that they can execute. A use case model can reduce the complexity of a system and increase its understandability.
 
-The use case model of our system can be found as figure [\ref{fig:UCM}]. The main protagonist of our system is the mechanical engineer who is tasked with training the system to classify a set of small mechanical parts.
+The use case model of our system can be found as figure [\ref{fig:UCM}]. The two main protagonists of our system are the data collector, who is tasked with collecting synthetic and real images, and the machine learning expert, who is responsible for training the system to classify a set of small mechanical parts.
 
 \begin{figure}[h]
 \centering
@@ -383,13 +383,6 @@ Training the image classifier requires some underlying work. We have chosen to m
 
 The analysis object model is a visual dictionary of the main concepts visible to the user \cite{bruegge2004object}. The analysis object model depicts a system's entites, their corresponding attributes and functions, and illustrates the relationship between said entitie. Figure [\ref{fig:AOM}] represents the analysis object model of our system.
 
-\begin{figure}[h]
-\centering
-  \includegraphics[width=\textwidth]{AOM}
-\caption{Analysis Object Model}
-\label{fig:AOM}
-\end{figure}
-
 \subsubsection{SmallMechanicalPart}
 A small mechanical part is the main subject of our system. It is an object that our system aims to classify. Each SMP has a unique identifying label string.
 
@@ -422,6 +415,12 @@ Each CNNModel has an Optimizer. An Optimizer is the function aims to close the g
 \subsubsection{ImageClassifier}
 ImageClassifier orchestrates the feeding of data into the CNNModel for training. Moreover, it uses the testing set to calculate the accuracy of the trained model.
 
+\begin{figure}[H]
+\centering
+  \includegraphics[width=\textwidth]{AOM}
+\caption{Analysis Object Model}
+\label{fig:AOM}
+\end{figure}
 
 \subsection{Dynamic Model}
 
@@ -498,7 +497,7 @@ ImageClassifier consumes both the real and syntheic images, and stores them in a
 
 The CNNModel consumes the training set and the validation set to utilize them during the training phase. The testing set is then used to determine the accuracy of the trained CNNModel.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
   \includegraphics[width=\textwidth]{SSD}
 \caption{Subsystem Decomposition}
