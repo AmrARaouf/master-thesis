@@ -34,7 +34,7 @@
 
 \def\doctype{Master's Thesis}
 \def\faculty{Informatik}
-\def\title{Using Synthetic Data for Classification of Small Parts}		%TODO add title in German
+\def\title{Using Synthetic Data for Classification of Small Parts}
 \def\titleGer{Synthetische Daten für die Klassifizierung von Kleinteilen verwenden}	%TODO add title in German
 \def\supervisor{Prof. Bernd Brügge, Ph.D.}
 \def\advisor{Sajjad Taheri, M.Sc.}
@@ -64,31 +64,12 @@
 
 \chapter*{Acknowledgements}
 
-
 \pagenumbering{roman}
 
 \selectlanguage{english}
-\begin{abstract}
-
-Recent advances in Convolutional Neural Networks (CNN) have been able to conquer Computer Vision tasks and even surpass human performance. CNN algorithms are characteristically data-hungry, and obtaining domain-specific labeled data is often a cumbersome manual resource-heavy task. In this text we explore the use of synthetic data to train a CNN to perform image classification of different fasteners.
-
-\textit{Note:}
-
-\textit{\textbf{1. paragraph:} What is the motivation of your thesis? Why is it interesting from a scientific point of view? Which main problem do you like to solve?}
-
-The motivation for my thesis stems from CNN algorithms' hunger for labeled images in order to train for classification tasks and produce performant results. Obtaining a large corpus of labeled images is a difficult task, especially when we wish to train a network to classify a domain-specific dataset.
-
-\textit{\textbf{2. paragraph:} What is the purpose of the document? What is the main content, the main contribution?}
-In this document we explore the use of synthetic images to augment the training data for a given CNN. We explore the power of synthetic data to produce acceptable results while using as little real data as possible. The intuition comes from the ease of rendering a large synthetic dataset on demand.
-
-\textit{\textbf{3. paragraph:} What is your methodology? How do you proceed?}
-We explore the ratio of synthetic to real images that can be used for training a CNN and obtain good results.
-
-\end{abstract}
+\include{tex/abstract}
 
 \clearpage
-
-\selectlanguage{english}
 
 \tableofcontents
 \clearpage
@@ -110,17 +91,7 @@ We explore the ratio of synthetic to real images that can be used for training a
 \include{chapters/7-Summary}
 
 \appendix
-
-\chapter{Acronyms}
-
-\begin{acronym}
-\acro{SMP}{Small Mechanical Part}
-\acro{DNN}{Deep Neural Network}
-\acro{CNN}{Convolutional Neural Network}
-\acro{SGD}{Stochastic Gradient Descent}
-\acro{GPU}{Graphical Processing Unit}
-\end{acronym}
-
+\include{tex/acronyms}
 
 \clearpage
 

@@ -13,13 +13,13 @@ Our methodology is divided into 2 main parts: Image Collection and Training the 
 
 \subsection{Image Collection}
 
-It is impossible to have a performant image classifier with low quality data. Previous work [cite] has concluded a direct relationship between a synthetic image's photorealism and its the accuracy of the model it produces.
+During image collection, we strive to create a synthetic dataset that has a high degree of photo-realism. Simultaniously, we want to create 3D models as fast as possible to decrease the timing of the whole workflow. To achieve this balance, we aim to create an environment that is easy to model on 3D software. We attempt to eliminate light reflections and shadows and reduce the overall complexity of the scene.
 
 \subsubsection{Small Mechanical Parts and their corresponding 3D Models}
 We first choose a small mechanical model that we wish for our image classifier to recognize. We then download the corresponding 3D model by searching the Traceparts website \cite{traceparts} for the SMP's code name.
 
 \subsubsection{Collecting Real Images}
-We place the chosen small mechanical model on a horizontal plane and place a light source underneath. We choose a semi-transparent plane as a background to disperse the light source coming from beneath, and distribute the light evenly accross the plane. The purpose of the dispersed light is to eliminate any shadow that the small mechanical object might cast. Moreover the dispersed back light provides a lighting source without casting a direct light on the small mechanical object, which might cause glare on the SMP's reflective surface.
+We place the chosen small mechanical model on a horizontal plane and place a light source underneath. We choose a plain, white, semi-transparent plane as a background to disperse the light source coming from beneath, and distribute the light evenly accross the plane. The purpose of the dispersed light is to eliminate any shadow that the small mechanical object might cast. Moreover the dispersed back light provides a lighting source without casting a direct light on the small mechanical object, which might cause glare on the SMP's reflective surface.
 
 Next, we place a an iPhone over the plane, such that the small mechanical object is fully within the viewfield of the iPhone's camera. Our hoisting device places the iPhone 133 mm over the plane.
 
@@ -33,6 +33,7 @@ We start by creating the synthetic scene in th Rhinoceros 3D modeling software. 
 Next, we generate a python script that uses the Rhinoceros library to manipulate 3D objects in the Rhinoceros software. The python script is the controller for the synthetic data genertor. The synthetic data generator defines the rotation and translation ranges of the 3D model. It also specifies how many images are to be generated. For each new image, the script generates a random rotation and translation value from within the defined ranges. It then applies those transformation to the 3D model and renders a new 2D synthetic image.
 
 \subsubsection{Dataset}
+
 
 \subsection{Training the Image Classifier}
 
