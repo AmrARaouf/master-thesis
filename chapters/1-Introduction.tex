@@ -1,0 +1,37 @@
+\chapter{Introduction}
+
+Engine overhaul is the process of removing, disassembling, inspecting, repairing, cleaning, reassembling and testing a used engine. Overhauling involves the intricate process of dismantling an engine into small mechanical parts—ie. screws, fasteners, nuts and bolts. Those small mechanical parts are later reassembled back into a functioning engine.
+
+Thousends of different small mechanical parts can be used to structure an engine. To facilitate the process of reassembling the engine, each small mechanical part has to be labeled with its position and function after it has been dismantled.
+
+Traditionally, the task of labeling small mechanical parts is executed manually by a human task force. This approach presents a number of problems. Firstly, it is a labour-intensive task that depletes human resources. The manual approach requires a large number of man-hours to be invested, which means that it is both time consuming and expensive. Furthermore, labeling small mechanical parts is a sensitive process within the context of reassembling an engine. Humans are prone to error, which means that the manual approach would require further investment to ensure the accuracy of the labels that are assigned to the small mechanical parts.
+
+In this thesis, we present an approach to automatically classify small mechanical parts using a camera. Our approach involves minimal human interaction, and thus slashes the amount of man power required to label small mechanical parts. Moreover our automatic approach provides a quantifiable measurment for accuracy which can be used to assess and imporve the system, and ultimately reduce the effort required to avoid misclassification errors.
+
+Deep convolutional neural networks (CNNs) have become the state-of-the-art approach to classical computer vision and image processing tasks such as image classification, object detection and many others \cite{krizhevsky2012imagenet} \cite{szegedy2015going}. In this thesis we attempt to leverage the power of CNNs to automatically classify small mechanical parts during an engine overhauling process.
+
+\section{Problem}
+
+Deep convolutional neural networks are charactaristically data-hungry algorithms. The performance of a CNN algorithm is proportional the amount of data that is fed in as input. In our problem's case, we need to use a large number of images of each small mechanical part as input to the CNN algorithm. Creating a large number of images for our particular set of small mechanical parts is a time consuming and labour-intensive task. It presents the same problems as the traditional approach of manually labeling small mechanical parts.
+
+In this thesis we propose an experiment to evaluate the use of synthetic images as input to CNN algorithms. Instead of using pictures of the small mechanical parts, we obtain their respective 3D models and use them to generate synthetic images of the real objects.
+
+\section{Motivation}
+
+Most of the cutting edge research in convolutional neural networks has been done using a large number of input data \cite{krizhevsky2012imagenet} \cite{simonyan2014very} \cite{szegedy2015going} \cite{he2016deep}, exploiting large corpora of labeled images \cite{deng2009imagenet}. CNN algorithms are much less effective at classifying images if a large amount of input data is absent.
+
+Using synthetic images to classify small mechanical objects exploits the power of convolutional neural network while overcoming its main drawback: the need for a large number of input images. This approach is extendible to image classification problems in other domains. Synthtic images provide a fast and easy source of input to CNN algorithms without the impedence of having to create a large dataset.
+
+Furthermore, the process of generating synthetic images gives full control of the surrounding environment to the creator of the synthetic scene. The synthetic scene can easily be adjusted to capture specific features of the small mechanical parts.
+
+\section{Objectives}
+
+The main objective of this thesis is to assess the use of synthetic data as input for CNN algorithms to perform image classification. We explore the use of a fully synthetic dataset and also a mixed dataset of both real and synthetic images in varying ratios.
+
+\section{Outline}
+
+The Background chapter provides an explanation of the technology used to fulfill the objective of this thesis. The Related Work section transcribes the literature that was reviewed in preparation for this thesis.
+
+The Analysis chapter breaks down and presents the requirements of the software system that was used to execute our experiments. While the System Design chapter provides an extensive explanation of the system implementation details.
+
+The Evaluation chapter contains our expirement design and results. Lastly, the Summary chapter contains a recap of our work, the conclusions we have reached and the potential future work that can be based on our thesis.
