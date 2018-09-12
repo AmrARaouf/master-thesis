@@ -1,23 +1,15 @@
 \chapter{Summary}
 
-\textit{Note: This chapter includes the status of your thesis, a conclusion and an outlook about future work.}
+In this chapter we recap the work that we have done. We summarize the status of the project by relating to the functional and non-functional requirements that were previously identified. We present a conclusion of our results and propose a direction for future work that can further advance the usage of synthetic data in immage classification.
 
 \section{Status}
 
-\textit{Note: Describe honestly the achieved goals (e.g. the well implemented and tested use cases) and the open goals here. if you only have achieved goals, you did something wrong in your analysis.}
-
-\subsection{Realized Goals}
-
-\textit{Note: Summarize the achieved goals by repeating the realized requirements or use cases stating how you realized them.}
-
-\subsection{Open Goals}
-
-\textit{Note: Summarize the open goals by repeating the open requirements or use cases and explaining why you were not able to achieve them. \textbf{Important:} It might be suspicious, if you do not have open goals. This usually indicates that you did not thoroughly analyze your problems.}
+Table [\ref{tab:FRS}] displays a short summary of the functional requirements that we have identified earlier, as well as a short description of how they were implemented in the solution domain. Moreover, table [\ref{tab:NFRS}] lists our previously identified non-functional requirment, and present a discussion of how these requirements were realized.
 
 \section{Conclusion}
 
-\textit{Note: Recap shortly which problem you solved in your thesis and discuss your \textbf{contributions} here.}
+The main objective of our work was to decrease the amount of manual labour required to label a dataset of small parts. We proposed a system that facilitates the usage of synthetic data in image classification. Furthermore, we carried out an experiment to evaluate the usage of synthetic images to train a convolutional neural network to classify images of small parts. Our results indicate that a CNN trained on a mixture of synthetic and real images can provide a comparable classification accuracy to CNNs that have been trained on purely real data, while maintaining the advantage of requiring less real images, which are labor-intensive time-consuming to obtain.
 
 \section{Future Work}
 
-\textit{Note: Tell us the next steps  (that you would do if you have more time. be creative, visionary and open-minded here.}
+There are several possible directions for future improvements over the work that has been presented in our thesis. Our results indicate that, when adding new classes, the output classification accuracy is affected by the aesthetic similarity of small parts in the dataset. A logical next step is to evaluate the CNNs after increasing the number of output classes. Another possible improvement is to evaluate the work using bigger CNN architecures such as the ones presented in \cite{he2016deep} and \cite{szegedy2015going}.
