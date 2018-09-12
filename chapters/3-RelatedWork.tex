@@ -1,6 +1,27 @@
 \chapter{Related Work}
+We provide in this section the literature review about topics which touch different aspects of our work. We begin by discussing convolutional neural networks based classification systems. Next, we discuss different industrial use cases of image classification. We study the work done in fine grained visual categorization. Finally, we examine the use of synthetic images for different computer vision problems.
 
-\textit{Note: Describe related work regarding your topic and emphasize your (scientific) contribution in \textbf{contrast} to existing approaches / concepts / workflows. Related work is usually current research by others and you defend yourself against the statement: ``Why is your thesis relevant? The problem was already solved by XYZ.'' If you have multiple related works, use subsections to separate them.}
+\section{CNN Based Image Classification}
 
-\section{CNN based Image Classification}
-\section{Image Classification using Synthetic Images}
+Convolutional neural networks are feedforward neural networks with convolutional layers. CNNs were introduced in \cite{lecun1998gradient}. With the availability of larger training data such as ImageNet \cite{deng2009imagenet}, it became possible to train deeper networks. The first popular CNN was the AlexNet \cite{krizhevsky2012imagenet} which won the ImageNet challenge by a large margin inspiring a large amount of work in this direction. CNNs expanded their dominion over computer vision applications by extending to object detection \cite{girshick2014rich} \cite{ren2015faster}.
+
+\section{Industrial Use Cases for Image Classification}
+
+Previous work has tackled the problem of classifying fasteners for railway track inspection (fasteners fall under the category of small parts). The work done in \cite{gibert2015robust} uses Histogram of Gradients (HOG) to extract features, and a Support Vector Machine (SVM) classifier to detect missing, broken or functioning fasteners, and then further subcategorize the non-defective fasteners into 1 of 5 classes. A continuation on \cite{gibert2015robust} proposes a convolutional neural network is as a fastener classifier \cite{gibert2017deep}.
+
+The work done in \cite{aytekin2015railway} also tackles the problem of railway fastener inspection. The work evaluates principal component analysis (PCA), linear discriminant analysis (LDA), random-forest (RF), sparse representation (SR), and multitemplate matching (MTM) approaches. The training and testing datasets are created automatically using a high-speed laser range finder that is placed under an inspection carrier which travels over the railway to take images.
+
+Likewise, the work done in \cite{feng2014automatic} addresses the problem of automatic fastener classification and defect detection. The work proposes a system which places 2 cameras under a train coach. The cameras take pictures of the track and send it to an onboard processor which performs fastener localization, classification and defect assessment. The work proposes a novel classification technique based on Latent Dirichlet Allocation (LDA).
+
+\section{Fine Grained Visual Categorization}
+
+\section{Using Synthetic Images}
+Synthetic images have been used for training in a variety of problems. The work done in \cite{peng2015learning} investigates 2 questions. First, an experiment is proposed to evaluate the invariance of CNNs to different synthetic cues (realistic background, realistic object texture, etc..). Next, a CNN is trained for the task of object detection using synthetic images with uniform gray texture vs synthetic images with realistic texture.
+
+The work done in \cite{rajpura2017object} train a CNN obect detector to recognize objects inside a fridge. The work renders non-photorealistic synthetic scenes of 55 distinct products inside a fridge. The work evaluates the use of a fully synthetic training set versus a training set which includes 10\% real data.
+
+In the same manner as \cite{rajpura2017object}, the work done in \cite{georgakis2017synthesizing} synthesizes training data for object detection in indoor scenes. The work creates synthetic data by superimposing 3D models on real scenes. The work compares purely synthetic training sets as well as different ratio of real to synthetic training images.
+
+The work in \cite{sarkar2017trained} trains a CNN image classifier on synthetic images rendered from 3D models of 5 different objects.
+
+The work in \cite{goyal2017dataset} uses synthetic images to perform semantic segmentation. The work renders synthetic images using 3D models. In addition, pixel-wise annotations of the synthetic images are generated. A CNN is trained on the annotated synthetic images and the intersection over union (IoU) is evaluated.
