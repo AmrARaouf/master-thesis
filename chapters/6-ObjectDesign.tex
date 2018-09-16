@@ -14,9 +14,9 @@ Keras provides an out-of-the-box implementation of different CNN models, optimiz
 Furthermore, Keras provides an image loader, called \textit{ImageDataGenerator}. ImageDataGenerator feeds the training, validation and testing data to the CNN models from a folder directory. Consequently, we built our DataSplitGenerator using Keras's image loader.
 
 \section{Rhinoceros}
-Rhinoceros (Rhino for short) is a 3D modeling software. Rhino can create, edit, analyze, document, render, animate, and translate curves, surfaces, solids, point clouds, and polygon meshes \cite{rhino}.
+Rhinoceros (Rhino for short) is a 3D modeling software. Rhino can create, edit, analyze, document, render, animate, and translate curves, surfaces, solids, point clouds, and polygon meshes\footnote{https://www.rhino3d.com}.
 
-We chose Rhino to create our synthetic data because it has a python library called \textit{RhinoScriptSyntax}. RhinoScriptSyntax provides an API for object transformation, scene manipulation and image rendering in python. Moreover, the Rhino software hosts a python interpreter and consequently supports running python scripts directly in the software. RhinoScriptSyntax and the hosted python interpreter are used to automate repetitive tasks that can otherwise consume more time if executed manually.
+We choose Rhino to create our synthetic data because it has a python library called \textit{RhinoScriptSyntax}. RhinoScriptSyntax provides an API for object transformation, scene manipulation and image rendering in python. Moreover, the Rhino software hosts a python interpreter and consequently supports running python scripts directly in the software. RhinoScriptSyntax and the hosted python interpreter are used to automate repetitive tasks that can otherwise consume more time if executed manually.
 
 \subsection{Usage}
 We use Rhino to create our synthetic scene. We set the background and the lighting conditions of the environment, then we import our 3D model and place it horizontally on the background.

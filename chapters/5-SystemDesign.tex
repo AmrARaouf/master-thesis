@@ -13,8 +13,8 @@ In the previous chapter we have defined our Non-functional requirements. In this
   \begin{tabular}{ | l | p{5cm} | l | }
     \hline
     \textbf{Requirement} & \textbf{Design Goal} & \textbf{Criteria} \\ \hline
-    \textbf{Accuracy} & The system should be dynamic enough to accomodate the addition of new classes. & Performance \\ \hline
-    \textbf{Adaptability} & The system should be able to classify different small parts with high accuracy. & Performance \\ \hline
+    \textbf{Adaptability} & The system should be dynamic enough to accomodate the addition of new classes. & Performance \\ \hline
+    \textbf{Accuracy} & The system should be able to classify different small parts with high accuracy. & Performance \\ \hline
   \end{tabular}
   \caption{Non-functional requirements and their corresponding design goals}
   \label{tab:DG}
@@ -22,13 +22,13 @@ In the previous chapter we have defined our Non-functional requirements. In this
 
 \section{Subsystem Decomposition}
 
-Figure [\ref{fig:SSD}] depicts the system's subsystem decomposition. Our system is divided into 3 subsytems: SyntheticImageServer, RealImageServer and ImageClassifier.
+Figure [\ref{fig:SSD}] depicts the system's subsystem decomposition. Our system is divided into 3 subsytems: SyntheticImages, RealImages and ImageClassifier.
 
-\subsection{SyntheticImageServer}
-SyntheticImageServer is responsible for providing our system with synthetic images. It consists of 2 main components: SyntheticScene and SyntheticImageGenerator. The SyntheticScene generates an artificial environment and places a 3DModel inside said environment. The SyntheticImageGenerator renders 2D images of the 3D artificial scene.
+\subsection{SyntheticImages}
+SyntheticImages is responsible for providing our system with synthetic images. It consists of 2 main components: SyntheticScene and SyntheticImageGenerator. The SyntheticScene generates an artificial environment and places a 3DModel inside said environment. The SyntheticImageGenerator renders 2D images of the 3D artificial scene.
 
-\subsection{RealImageServer}
-The RealImageServer is the SyntheticImageServer's counterpart. It is responsible for providing our system with real images. The RealImageGenerator uses the Camera to take real images of the small parts. Next, the RealImageGenerator performs some processing on the raw images to provide our system with real images that can be used out of the box.
+\subsection{RealImages}
+The RealImages is the counterpart of SyntheticImages. It is responsible for providing our system with real images. The RealImageGenerator uses the Camera to take real images of the small parts. Next, the RealImageGenerator performs some processing on the raw images to provide our system with real images that can be used out of the box.
 
 \subsection{ImageClassifier}
 ImageClassifier consumes both the real and syntheic images, and stores them in a Dataset. The images are then fed to the DataSplitGenerator, which is in turn responsible for splitting the data into a training set, a validation set and a testing set.
@@ -38,7 +38,7 @@ The CNNModel consumes the training set and the validation set to utilize them du
 \begin{figure}[H]
 \centering
   \includegraphics[width=\textwidth]{SSD}
-\caption{Subsystem Decomposition}
+\caption{Subsystem decomposition showing the different subsystems and the relationships between them.}
 \label{fig:SSD}
 \end{figure}
 
@@ -52,17 +52,17 @@ This section describes how the subsystems are mapped onto existing hardware and 
 \label{fig:DD}
 \end{figure}
 
-\subsection{Windows Machine}
-The Windows machine is used to run the Rhinoceros 3D modeling software. We chose the windows version of Rhinoceros because it features that are not available on the Ubuntu or Mac versions. We use Rhinoceros to model the SyntheticScene. Moreover, Rhinoceros hosts a python interpreter, which we use to run the SyntheticImageGenerator.
+\subsection{SyntheticImages}
+The SyntheticImages device is used to run the Rhinoceros 3D modeling software\footnote{https://www.rhino3d.com}. We chose the Windows version of Rhinoceros because it supports extra features that are not available on the Ubuntu or Mac versions. We use Rhinoceros to model the SyntheticScene. Moreover, Rhinoceros hosts a python interpreter, which we use to run the SyntheticImageGenerator.
 
 \subsection{Camera}
-The Camera is used to capture raw images of the small parts.
+The Camera is used to capture raw images of the small parts. We use the Camera application on an iPhone 6.
 
-\subsection{Ubuntu Machine}
-The RealImageGenerator uses the Camera to generate raw real images. The raw real images are then processed by the RealImageGenerator and become ready to be used out of the box.
+\subsection{RealImages}
+The RealImageGenerator uses the Camera device to generate raw real images. The raw real images are then processed by the RealImageGenerator and become ready to be used out of the box.
 
-\subsection{Ubuntu Machine}
-The second Ubuntu machine is used to run the ImageClassifier. The Dataset is stored in the Ubuntu machine's file system. We use the system's Python environment to run the DataSplitGenerator and the CNNModel. This Ubuntu Machine is equipped with a Graphics processing unit (GPU). The GPU is used for parallel processing of the Convolutional Neural Network training algorithm. This enhancement significantly slashes down the time needed to train a CNN.
+\subsection{ImageClassifier}
+TThe Dataset is stored in the file system of the ImageClassifier device. We use the device's Python environment to run the DataSplitGenerator and the CNNModel. Furthermore, we use Keras, a neural networks API that provides out-of-the-box CNN implementations \cite{chollet2015keras}. This Ubuntu Machine is equipped with a Graphics processing unit (GPU). The GPU is used for parallel processing of the Convolutional Neural Network training algorithm. This enhancement significantly slashes down the time needed to train a CNN.
 
 \section{Persistent Data Management}
 
@@ -81,6 +81,6 @@ Lastly, each training, validation and testing folder contains a set of images th
 \begin{figure}[h]
 \centering
   \includegraphics[width=0.8\textwidth]{FS}
-\caption{DataSplit File Structure}
+\caption{DataSplit file structure model displaying how the data split generator organizes the images before feeding them to the ImageClassifier.}
 \label{fig:FS}
 \end{figure}

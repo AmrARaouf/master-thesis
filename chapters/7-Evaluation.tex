@@ -16,24 +16,36 @@ Our methodology is divided into 2 main parts: Image Collection and Training the 
 During image collection, we strive to create a synthetic dataset that has a high degree of photo-realism. Simultaniously, we want to create 3D models as fast as possible to decrease the timing of the whole workflow. To achieve this balance, we aim to create an environment that is easy to model on 3D software. We attempt to eliminate light reflections and shadows and reduce the overall complexity of the scene.
 
 \subsubsection{Small Parts and their corresponding 3D Models}
-We first choose a small part that we wish for our image classifier to recognize. We then download the corresponding 3D model by searching the Traceparts website \cite{traceparts} for the small part's code name.
+We first choose a small part that we wish for our image classifier to recognize. We then download the corresponding 3D model by searching the Traceparts website\footnote{https://www.traceparts.com} for the small part's code name.
 % TODO: Add real and synthetic images of all of our 6 classes
 
 \subsubsection{Collecting Real Images}
 We place the chosen small model on a horizontal plane and place a light source underneath. We choose a plain, white, semi-transparent plane as a background to disperse the light source coming from underneath, and distribute the light evenly accross the plane. We place the light source beneath the plane, rather than above, to eliminate any shadow that the small parts might cast. Moreover the dispersed back light provides a lighting source without casting a direct light on the objects, which might cause glare on the small part's reflective surface.
 
-Next, we place a an iPhone over the plane, such that the small object is fully within the viewfield of the iPhone's camera. Our hoisting device places the iPhone 133 mm over the plane.
+Next, we place a an iPhone over the plane, such that the small object is fully within the viewfield of the iPhone's camera. A wooden setup places the iPhone 133 mm over the plane as shown in figure [\ref{fig:RealSetup}].
 
 Afterwards, we rotate and change the position of the small part randomly, while maintaining that the small part is fully within the viewfield of the camera. We use the iPhone's camera to take a picture of the small part. We repeat this step until we obtain the desired number of real images.
 
 Lastly, we resize the raw real images taken by the iPhone camera to conform with the height and width required by the image classifier.
-% TODO: Add image of real setup
 
 \subsubsection{Generating Synthetic Images}
 We start by creating the synthetic scene in the Rhinoceros 3D modeling software. First, we take a picture of the real horizontal plane and use it as a background for our synthetic scene. We then place a synthetic lighting source underneath the plane to mimic the lighting effect of the real environment. Next, we place the 3D model on the horizontal plane of the environment.
 
 Next, we generate a python script that uses the Rhinoceros library to manipulate 3D objects in the Rhinoceros software. The python script is the controller for the synthetic data genertor. The synthetic data generator obtains the rotation and translation ranges of the 3D model. It also specifies how many images are to be generated. For each new image, the script generates a random rotation and translation value from within the defined ranges. It then applies those transformation to the 3D model and renders a new 2D synthetic image.
-%TODO: Add screenshot of Rhino in action
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=0.95\textwidth]{real_setup}
+\caption{Set up of generating real images. An iPhone is placed on a wooden setup over a horizontal, backlit glass table with opal foils. The small part rests on the table within the viewfield of the iPhone camera.}
+\label{fig:RealSetup}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=0.95\textwidth]{rhino_screenshot}
+\caption{Synthetic scene in Rhino. The 3D model rests horizontally on a backlit plane to mimic the environment of the real setup. Sections (a) and (b) of the image depict the top view of the scene.}
+\label{fig:RhinoScreenshot}
+\end{figure}
 
 \subsubsection{Dataset}
 The real images generated from the small part and the synthetic images generated from the corresponding 3D model are transfered to the Training Machine where they are placed in the dataset folder.
@@ -57,7 +69,7 @@ We compare the performance of 5 different ratios of synthetically enhanced train
 \textbf{10\%} & 540 & 60 & 600 & 100 & 90 \\ \hline
 \textbf{100\%} & 0 & 150 & 150 & 50 & 50 \\ \hline
 \end{tabular}
-\caption{Each column details the number of images per class for the specified data split}
+\caption{Each column details the number of images per class for the specified data split.}
 \label{tab:DS}
 \end{table}
 

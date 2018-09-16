@@ -16,15 +16,19 @@ Functional requirements (FRs) describe the interactions between the system and t
 The system's main function is to classify images of different small parts. Furthermore, the system needs to be dynamic and scalable to accomodate new small parts. To ensure that the system is able to classify images accurately, while leveraging synthetic input images, we introduce the following Functional Requirements.
 
 \begin{itemize}
-  \item [FR1] \textbf{Generate Synthetic Images}: Given a 3D model of a small part, the system should generate a set of synthetic images of the model. The system should apply random rotation and translation to the 3D model before rendering the 2D synthetic image to ensure that the generated dataset captures the small part from different angles, and in different positions.
+  \item [FR1] \textbf{Generate Synthetic Images}: Given a 3D model of a small part, the system should place the 3D model in a synthetic scene and subsequently render a set of 2D synthetic images of the scene. The system should apply random rotation and translation to the 3D model before rendering the 2D synthetic image to ensure that the generated dataset captures the small part from different angles, and in different positions.
 
-  \item [FR2] \textbf{Add New Class to the Classification Model}: The system should accomodate the addition of a new small part to the model. The system should be able to label new output classes.
+  \item [FR2] \textbf{Set 3D Model Transformation Range}: To generate random transformations, the system should allow for the definition of a rotation and translation range for each 3D model. This allows the system to generate limited random transformations to avoid the risk of generating an unrealistic synthetic image.
 
-  \item [FR3] \textbf{Adjust Input Data Split}: The system should allow for changes in the training, validation and testing input data which is assigned as input to the model. This includes changing the number of images in each set and manipulating the ratio of synthetic to real images in the training split.
+  \item [FR3] \textbf{Take Real Images}: Given a small part, the system should have the ability to generate real images of the small part.
 
-  \item [FR4] \textbf{Retrain Classification Model}: The system should be able to retrain the classification model. This step is usually taken after the augmentation or adjustment of the input data split.
+  \item [FR4] \textbf{Generate Input Data Split}: The system should be able to generate a data split. It should be able to generate a training set, a testing set and a validation set. Moreover, the system should allow for setting the ratio of synthetic to real images in the training set.
 
-  \item [FR5] \textbf{Fine-Tune Classification Model}: The underlying CNN algorithm should be subject to fine-tuning in order to maximize the accuracy of the system.
+  \item [FR5] \textbf{Train Classification Model}: The system should have the capacity to train a classification model given a data splits.
+
+  \item [FR6] \textbf{Evaluate Classification Model}: The system should provide a mechanism to evaluate the performance of a given classification model.
+
+
 \end{itemize}
 
 \subsection{Nonfunctional Requirements}
@@ -33,7 +37,7 @@ Nonfunctional Requirements (NFRs) are key system requirements that apply to the 
 
 \begin{itemize}
   \item [NFR1] \textbf{Performance}: A performence requirement is the measure of a quantifiable attribute of our system. In our case we would like to track our system's \textbf{classification accuracy}.\\
-  We first define our system's accuracy for a single class to be the percentage of the given class's testing image split that the image classifier correctly predicts. We consequently define our system's classification accuracy to be the image classifier's average prediction accuracy over each class.
+  We first define our system's accuracy for a single class to be the percentage of the given class's testing image split that the classification model correctly predicts. We consequently define our system's classification accuracy to be the classification model's average prediction accuracy over each class.
 
   \item [NFR2] \textbf{Adaptability}: Adaptability is the ability to change the system to deal with additional application domain concepts \cite{bruegge2004object}. Our system needs to be dynamic enough to accomodate for new small parts that can be later added even after the system has been deployed.
 \end{itemize}
@@ -50,18 +54,18 @@ The use case model of our system can be found as figure [\ref{fig:UCM}]. The two
 \begin{figure}[H]
 \centering
   \includegraphics[width=\textwidth]{UCM}
-\caption{Use Case Model}
+\caption{The use case model displays the different users of our system and the actions that they can undertake.}
 \label{fig:UCM}
 \end{figure}
 
-The use case model can be divided into 3 main functions; namely generating synthetic images, obtaining real images, and training an image classifier.
+The use case model can be divided into 3 main functions; namely generating synthetic images, obtaining real images, and training/evaluating a classification model.
 
 \subsubsection{Generating Synthetic Images}
 
 Generating synthetic images the cornerstone for a synthetically augmented dataset. There's a lot of work that goes into generating the 3D synthetic scene and the corresponding renditions. To increase the understandability of our model, we have separated the the use case that revolve around modeling the small part 3D model itself as \textit{Specify3DTransformations}, and the use case that deals with the synthetic scene environment as \textit{SetUpSyntheticScene}.
 
 \begin{usecase}
-  \addtitle{Use Case}{Specify3DTransformations}
+  \addtitle{Use Case}{Specify3DTransformationRange}
 
   \addfield{Participating Actors}{DataGenerator}
 
@@ -71,15 +75,15 @@ Generating synthetic images the cornerstone for a synthetically augmented datase
   }
 
   \additemizedfield{Entry Condition}{
-    \item DataGenerator has modeling software open.
+    \item A 3D model of a small part has been chosen.
   }
 
   \additemizedfield{Exit Condition}{
-    \item All the desired transformations and their corresponding attributes have been specified.
+    \item All the desired transformations have been chosen, and their ranges set.
   }
 
   \additemizedfield{Quality Requirements}{
-    \item In the effort to achieve the Performance Nonfunctional requirement, synthetic images have to look as photo realistic as possible. The 3D transformations should strive to output the range of positions that the respective small part can be placed in.
+    \item The 3D transformation ranges should reflect the real-life transformations that the small parts can undergo, while staying within the camera viewfield.
   }
 \end{usecase}
 
@@ -92,11 +96,11 @@ Generating synthetic images the cornerstone for a synthetically augmented datase
   \addscenario{Flow of Events}{
     \item In the modeling software, the DataGenerator places the 3D model of the small part on a horizontal plane as if lying on a table.
     \item The DataGenerator sets the background of the horizontal plane to mimic the background of the real images in the dataset.
-    \item The DataGenerator sets the lighting condition of the scene to reflect the lighting condition of the environment where the real small part images are taken.
+    \item The DataGenerator sets the lighting condition of the scene to reflect the lighting condition of the environment where the small part's real images are taken.
   }
 
   \additemizedfield{Entry Condition}{
-    \item DataGenerator has modeling software open.
+    \item A 3D model of a small part has been chosen.
   }
 
   \additemizedfield{Exit Condition}{
@@ -105,7 +109,7 @@ Generating synthetic images the cornerstone for a synthetically augmented datase
   }
 
   \additemizedfield{Quality Requirements}{
-    \item The synthetic scene should look as photorealistic as possible. This helps the Image Classifier achieve a higher classification accuracy using the synthetic images.
+    \item The synthetic scene should look as photorealistic as possible. This helps the classification model achieve a higher classification accuracy using the synthetic images.
   }
 \end{usecase}
 
@@ -121,20 +125,22 @@ Generating synthetic images the cornerstone for a synthetically augmented datase
   }
 
   \additemizedfield{Entry Condition}{
-    \item DataGenerator has modeling software open.
+    \item DataGenerator has set the transformation ranges of the 3D model.
+    \item DataGenerator has set up the synthetic scene.
   }
 
   \additemizedfield{Exit Condition}{
-    \item The DataGenerator obtains a set of synthetic images for the specified small part that can be later used to train the Image Classifier.
+    \item The DataGenerator obtains a set of synthetic images for the specified small part that can be later used to train a classification model.
   }
 
   \additemizedfield{Quality Requirements}{
-    \item The output image dimensions should match the input required by the image classifier.
+    \item The generated image dimensions should match the input required by the classification model.
   }
 \end{usecase}
 
 \clearpage
 \subsubsection{Obtaining Real Images}
+Obtaining real images is a straight forward task. The DataGenerator should strive to create an environment that is easy to model in 3D software. This will enable the creation of photo-realistic synthetic images.
 
 \begin{usecase}
   \addtitle{Use Case}{TakeRealImages}
@@ -143,16 +149,18 @@ Generating synthetic images the cornerstone for a synthetically augmented datase
 
   \addscenario{Flow of Events}{
     \item The DataGenerator places the camera over a plane.
-    \item The DataGenerator sets the small part over the plane in a random position, such that the full small part body is within the viewfield of the camera.
+    \item The DataGenerator sets the small part over the plane in a random position, while maintiaining that the small part remains horizontal. The full small part body should remain within the viewfield of the camera.
     \item The DataGenerator takes a picture of the small part.
     \item The DataGenerator repeats steps 2 and 3 until the desired number of real images of the small part is reached.
-    \item The DataGenerator resizes the images to correspond to the input image size of the Image Classifier. 
+    \item The DataGenerator resizes the images to correspond to the input image size of the classification model. 
   }
 
-  %\additemizedfield{Entry Condition}{}
+  \additemizedfield{Entry Condition}{
+    \item A small part has been chosen.
+  }
 
   \additemizedfield{Exit Condition}{
-    \item The DataGenerator obtains a set of real images for the specified small part that can be later used to train the Image Classifier.
+    \item The DataGenerator obtains a set of real images for the specified small part that can be later used to train the classification model.
   }
 
   \additemizedfield{Quality Requirements}{
@@ -161,12 +169,12 @@ Generating synthetic images the cornerstone for a synthetically augmented datase
 \end{usecase}
 
 \clearpage
-\subsubsection{Training the Image Classifier}
+\subsubsection{Training the Classification Model}
 
-Training the image classifier requires some underlying work. We have chosen to model this use case as one that includes setting up the input data and configuring the image classifier (modeled as \textit{SetInputDataSplit} and \textit{SetUpImageClassifier} respectively).
+Training the classification model requires some underlying work. We have chosen to model this use case as one that includes setting up the input data splits and configuring the classification model (modeled as \textit{GenerateInputDataSplit} and \textit{SetUpClassificationModel} respectively).
 
 \begin{usecase}
-  \addtitle{Use Case}{SetInputDataSplit}
+  \addtitle{Use Case}{GenerateInputDataSplit}
 
   \addfield{Participating Actors}{MachineLearningEngineer}
 
@@ -176,43 +184,53 @@ Training the image classifier requires some underlying work. We have chosen to m
   }
 
   \additemizedfield{Entry Condition}{
-    \item For each small part set to be classified by the Image Classifier, the corresponding real and synthetic images should be generated and ready for use.
+    \item For each small part set to be classified by the classification model, the corresponding real and synthetic images should be generated and ready for use.
   }
 
   \additemizedfield{Exit Condition}{
-    \item The data split should be ready to be used by the image classifier.
+    \item The data split should be ready to be used by the classification model.
   }
 \end{usecase}
 
 \clearpage
 \begin{usecase}
-  \addtitle{Use Case}{SetUpImageClassifier}
+  \addtitle{Use Case}{SetUpClassificationModel}
 
   \addfield{Participating Actors}{MachineLearningEngineer}
 
   \addscenario{Flow of Events}{
-    \item The MachineLearningEngineer chooses a convolutional neural network architecture for the Image Classifier.
+    \item The MachineLearningEngineer chooses a convolutional neural network architecture for the classification model.
     \item The MachineLearningEngineer sets the hyperparameters: number of batches, number of epochs, number of frozen layers in the CNN, the optimizer and the hyperparameters associated with the chosen optimizer.
-  }
-\end{usecase}
-
-\begin{usecase}
-  \addtitle{Use Case}{TrainImageClassifier}
-
-  \addfield{Participating Actors}{MachineLearningEngineer}
-
-  \addscenario{Flow of Events}{
-    \item The MachineLearningEngineer trains the image classifier on the given training and validation sets.
-    \item The MachineLearningEngineer evaluates the accuracy of the image classifier by studying the classifier's predictions on the testing set.
-    \item The MachineLearningEngineer fine-tunes the hyper parameters and re-trains the system until the maximum possible accuracy is reached.
-  }
-
-  \additemizedfield{Entry Condition}{
-    \item The data split should be generated and the CNN model and the initial hyperparameters should be chosen.
   }
 
   \additemizedfield{Exit Condition}{
-    \item The Image Classifier outputs the maximum possible accuracy given the input dataset.
+    \item The classification model architecture, optimizer and corresponding hyperparameters should be selected.
+  }
+\end{usecase}
+
+\clearpage
+\begin{usecase}
+  \addtitle{Use Case}{TrainClassificationModel}
+
+  \addfield{Participating Actors}{MachineLearningEngineer}
+
+  \addscenario{Flow of Events}{
+    \item The MachineLearningEngineer trains the classification model on the given training and validation sets.
+    \item The MachineLearningEngineer evaluates the accuracy of the classification model by studying the model's predictions on the testing set.
+    \item The MachineLearningEngineer fine-tunes the hyperparameters and re-trains the system until the maximum possible accuracy is reached.
+  }
+
+  \additemizedfield{Entry Condition}{
+    \item The data split should be generated.
+    \item The CNN model architecture, optimizer and initial hyperparameters should be chosen.
+  }
+
+  \additemizedfield{Exit Condition}{
+    \item The classification model outputs the maximum possible accuracy given the input dataset.
+  }
+
+  \additemizedfield{Quality Requirements}{
+    \item The classification model's hyperparameters should be fine-tuned until the maximum possible accuracy has been reached.
   }
 \end{usecase}
 
@@ -256,7 +274,7 @@ ImageClassifier orchestrates the feeding of data into the CNNModel for training.
 \begin{figure}[H]
 \centering
   \includegraphics[width=\textwidth]{AOM}
-\caption{Analysis Object Model}
+\caption{The analysis object model of our system identifies our system's objects as well as their attributes and functions.}
 \label{fig:AOM}
 \end{figure}
 
@@ -271,17 +289,17 @@ Figure [\ref{fig:AD1}] depicts the workflow of activities required to generate a
 \begin{figure}[H]
 \centering
   \includegraphics[width=0.65\textwidth]{AD1}
-\caption{Activity Diagram depicting the workflow required for Dataset generation}
+\caption{Activity Diagram depicting the workflow required for Dataset generation.}
 \label{fig:AD1}
 \end{figure}
 
-\subsubsection{Training the Image Classifier}
+\subsubsection{Obtain Image Classifier}
 
-Figure [\ref{fig:AD2}] describes the workflow of activities required to train the image classifier. The MachineLearningEngineer splits the data into training, validation and testing sets. The MachineLearningEngineer then creates a CNN model. Next the MachineLearningEngineer feeds the training data to the CNN model to obtained a trained CNN model. The MachineLearningEngineer then evaluates the trained CNN model accuracy using the testing set. If the accuracy of the trained CNN model is not sufficient, the CNN model is fine tuned and re-trained.
+Figure [\ref{fig:AD2}] describes the workflow of activities required to obtain the image classifier. The MachineLearningEngineer splits the data into training, validation and testing sets. The MachineLearningEngineer then creates a CNN model. Next the MachineLearningEngineer feeds the training data to the CNN model to obtained a trained CNN model. The MachineLearningEngineer then evaluates the trained CNN model accuracy using the testing set. If the accuracy of the trained CNN model is not sufficient, the CNN model is fine tuned and re-trained.
 
 \begin{figure}[H]
 \centering
   \includegraphics[width=0.7\textwidth]{AD2}
-\caption{Activity Diagram describing the workflow required to train the Image Classifier}
+\caption{Activity Diagram describing the workflow required to obtain the Image Classifier.}
 \label{fig:AD2}
 \end{figure}

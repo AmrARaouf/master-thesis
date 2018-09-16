@@ -4,7 +4,22 @@ In this chapter we recap the work that we have done. We summarize the status of 
 
 \section{Status}
 
-Table [\ref{tab:FRS}] displays a short summary of the functional requirements that we have identified earlier, as well as a short description of how they were implemented in the solution domain. Moreover, table [\ref{tab:NFRS}] lists our previously identified non-functional requirment, and present a discussion of how these requirements were realized.
+Table [\ref{tab:FRS}] displays a short summary of the functional requirements that we have identified earlier, as well as a short description of how they were implemented in the solution domain.
+
+\begin{table}[h]
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Functional Requirement} & \textbf{Implementation} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Generate Synthetic\\ Images\end{tabular} & \begin{tabular}[c]{@{}l@{}}Generating the synthetic images is\\ implemented in Rhinoceros throught the\\ creation of a SyntheticScene and\\ utilization of the SyntheticImageGenerator\\ component.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Set 3D Model\\ Transformation Range\end{tabular} & \begin{tabular}[c]{@{}l@{}}The transformation ranges for each\\ 3D model are set in the python script\\ that Rhino executes to generate the\\ synthetic images.\end{tabular} \\ \hline
+Take Real Images & \begin{tabular}[c]{@{}l@{}}The RealImageGenerator uses the\\ Camera component to take real images.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Generate Input\\ Data Split\end{tabular} & \begin{tabular}[c]{@{}l@{}}In the ImageClassifier subsystem, the\\ DataSplitGenerator splits the images in\\ the Dataset component into a training\\ set, a validation set and a test set.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Train Classification\\ Model\end{tabular} & \begin{tabular}[c]{@{}l@{}}The CNNModel can be trained using\\ the training and validation data for\\ training.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Evaluate\\ Classification Model\end{tabular} & \begin{tabular}[c]{@{}l@{}}We can evaluate the classification\\ accuracy of the CNNModel by\\ predicting the labels of the testing set.\end{tabular} \\ \hline
+\end{tabular}
+\caption{The functional requirements that we have defined in the Analysis chapter and how those requirements were implemented in the solution domain.}
+\label{tab:FRS}
+\end{table}
 
 \section{Conclusion}
 
