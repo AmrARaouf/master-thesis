@@ -1,10 +1,10 @@
 \chapter{Evaluation}
 
-In this chapter we describe how we utilized our system to run our experiments. We provide a quantitative analysis of the data that we gathered and the comparison between the different experiment settings.
+In this chapter we describe how our system is utilized to run our experiments. We provide a quantitative analysis of the data that we gathered and the comparison between the different experiment settings.
 
 \section{Objectives}
 
-We hypothesize that we are able to enhance the classification accuracy of our image classifier using synthetic data for training. We examine multiple ratios of synthetic to real images for training. Moreover, we run our experiments on multiple CNN architectures and fine-tune them accordingly.
+We hypothesize that we are able to enhance the classification accuracy of our image classifier using synthetic data for training. Multiple ratios of synthetic to real images for training are examined. Moreover, we run our experiments on multiple CNN architectures and fine-tune them accordingly.
 
 
 \section{Methodology}
@@ -16,8 +16,8 @@ Our methodology is divided into 2 main parts: Image Collection and Training the 
 During image collection, we strive to create a synthetic dataset that has a high degree of photo-realism. Simultaniously, we want to create 3D models as fast as possible to decrease the timing of the whole workflow. To achieve this balance, we aim to create an environment that is easy to model on 3D software. We attempt to eliminate light reflections and shadows and reduce the overall complexity of the scene.
 
 \subsubsection{Small Parts and their corresponding 3D Models}
-We first choose a small part that we wish for our image classifier to recognize. We then download the corresponding 3D model by searching the Traceparts website\footnote{https://www.traceparts.com} for the small part's code name.
-% TODO: Add real and synthetic images of all of our 6 classes
+We first choose a small part that we wish for our image classifier to recognize. We then download the corresponding 3D model by searching the Traceparts website\footnote{https://www.traceparts.com} for the small part's code name. Figure [\ref{fig:Dataset}] shows each small part and its corresponding 3D model. 
+
 
 \subsubsection{Collecting Real Images}
 We place the chosen small model on a horizontal plane and place a light source underneath. We choose a plain, white, semi-transparent plane as a background to disperse the light source coming from underneath, and distribute the light evenly accross the plane. We place the light source beneath the plane, rather than above, to eliminate any shadow that the small parts might cast. Moreover the dispersed back light provides a lighting source without casting a direct light on the objects, which might cause glare on the small part's reflective surface.
@@ -35,14 +35,21 @@ Next, we generate a python script that uses the Rhinoceros library to manipulate
 
 \begin{figure}[H]
 \centering
-  \includegraphics[width=0.95\textwidth]{real_setup}
+  \includegraphics[width=\textwidth]{dataset}
+\caption{Samples of images for each class that we use in our experiments. For each pair, the image on the left is a sample real image, while the image on the right is a sample synthetic imahe. The label under each image pair is the label we assign to the class.}
+\label{fig:Dataset}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=\textwidth]{real_setup}
 \caption{Set up of generating real images. An iPhone is placed on a wooden setup over a horizontal, backlit glass table with opal foils. The small part rests on the table within the viewfield of the iPhone camera.}
 \label{fig:RealSetup}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-  \includegraphics[width=0.95\textwidth]{rhino_screenshot}
+  \includegraphics[width=\textwidth]{rhino_screenshot}
 \caption{Synthetic scene in Rhino. The 3D model rests horizontally on a backlit plane to mimic the environment of the real setup. Sections (a) and (b) of the image depict the top view of the scene.}
 \label{fig:RhinoScreenshot}
 \end{figure}
@@ -63,13 +70,13 @@ We compare the performance of 5 different ratios of synthetically enhanced train
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
 \textbf{Data Split} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Training\\ (Synthetic)\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Training\\ (Real)\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Training\\ (Total)\end{tabular}}} & \multicolumn{1}{c|}{\textbf{Validation}} & \multicolumn{1}{c|}{\textbf{Testing}} \\ \hline
-\textbf{0\%} & 600 & 0 & 600 & 100 & 150 \\ \hline
-\textbf{2.5\%} & 585 & 15 & 600 & 100 & 135 \\ \hline
-\textbf{5\%} & 570 & 30 & 600 & 100 & 120 \\ \hline
-\textbf{10\%} & 540 & 60 & 600 & 100 & 90 \\ \hline
-\textbf{100\%} & 0 & 150 & 150 & 50 & 50 \\ \hline
+\textbf{R0-S100} & 600 & 0 & 600 & 100 & 150 \\ \hline
+\textbf{R2.5-S97.5} & 585 & 15 & 600 & 100 & 135 \\ \hline
+\textbf{R5-S95} & 570 & 30 & 600 & 100 & 120 \\ \hline
+\textbf{R10-S90} & 540 & 60 & 600 & 100 & 90 \\ \hline
+\textbf{R100-S0} & 0 & 150 & 150 & 50 & 50 \\ \hline
 \end{tabular}
-\caption{Each column details the number of images per class for the specified data split.}
+\caption{The data splits are named in the format 'R[\% of real data]-S[\% of synthetic data]'. Each column details the number of images per class for the specified data split.}
 \label{tab:DS}
 \end{table}
 
@@ -95,13 +102,13 @@ Tables [\ref{tab:vgg16-results}] and [\ref{tab:vgg19-results}] provide the resul
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
 \textbf{\begin{tabular}[c]{@{}l@{}}Data\\ Split\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Flat\\ Head\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Hex\\ Large\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Hex\\ Small\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Long-\\ hex\\ Large\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mush-\\ room\\ Large\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mush-\\ room\\ Small\end{tabular}} & \textbf{Total} \\ \hline
-\textbf{0\%} & 99.333 & 48.000 & 98.667 & 96.667 & 80.667 & 78.000 & \textbf{83.556} \\ \hline
-\textbf{2.5\%} & 100.00 & 79.259 & 99.259 & 99.259 & 83.704 & 80.741 & \textbf{90.370} \\ \hline
-\textbf{5\%} & 100.00 & 95.833 & 100.00 & 97.500 & 90.833 & 75.833 & \textbf{93.333} \\ \hline
-\textbf{10\%} & 100.00 & 94.444 & 98.889 & 100.00 & 98.889 & 90.000 & \textbf{97.037} \\ \hline
-\textbf{100\%} & 100.00 & 98.000 & 100.00 & 98.000 & 78.000 & 92.000 & \textbf{94.333} \\ \hline
+\textbf{R0-S100} & 99.333 & 48.000 & 98.667 & 96.667 & 80.667 & 78.000 & \textbf{83.556} \\ \hline
+\textbf{R2.5-S97.5} & 100.00 & 79.259 & 99.259 & 99.259 & 83.704 & 80.741 & \textbf{90.370} \\ \hline
+\textbf{R5-S95} & 100.00 & 95.833 & 100.00 & 97.500 & 90.833 & 75.833 & \textbf{93.333} \\ \hline
+\textbf{R10-S90} & 100.00 & 94.444 & 98.889 & 100.00 & 98.889 & 90.000 & \textbf{97.037} \\ \hline
+\textbf{R100-S0} & 100.00 & 98.000 & 100.00 & 98.000 & 78.000 & 92.000 & \textbf{94.333} \\ \hline
 \end{tabular}
-\caption{Class-wise classification accuracy of a VGG16 network trained on different ratios of synthetic data.}
+\caption{Class-wise classification accuracy of a VGG16 network trained on different ratios of synthetic data to real data.}
 \label{tab:vgg16-results}
 \end{table}
 
@@ -111,19 +118,19 @@ Tables [\ref{tab:vgg16-results}] and [\ref{tab:vgg19-results}] provide the resul
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
 \textbf{\begin{tabular}[c]{@{}l@{}}Data\\ Split\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Flat\\ Head\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Hex\\ Large\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Hex\\ Small\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Long-\\ hex\\ Large\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mush-\\ room\\ Large\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Mush-\\ room\\ Small\end{tabular}} & \textbf{Total} \\ \hline
-\textbf{0\%} & 100.00 & 81.333 & 88.667 & 92.000 & 98.667 & 52.667 & \textbf{85.556} \\ \hline
-\textbf{2.5\%} & 100.00 & 100.00 & 86.667 & 99.259 & 99.259 & 90.370 & \textbf{95.926} \\ \hline
-\textbf{5\%} & 100.00 & 100.00 & 96.667 & 98.333 & 100.00 & 88.333 & \textbf{97.222} \\ \hline
-\textbf{10\%} & 100.00 & 90.000 & 96.667 & 98.889 & 98.889 & 96.667 & \textbf{96.852} \\ \hline
-\textbf{100\%} & 100.00 & 92.000 & 98.000 & 96.000 & 78.000 & 90.000 & \textbf{92.333} \\ \hline
+\textbf{R0-S100} & 100.00 & 81.333 & 88.667 & 92.000 & 98.667 & 52.667 & \textbf{85.556} \\ \hline
+\textbf{R2.5-S97.5} & 100.00 & 100.00 & 86.667 & 99.259 & 99.259 & 90.370 & \textbf{95.926} \\ \hline
+\textbf{R5-S95} & 100.00 & 100.00 & 96.667 & 98.333 & 100.00 & 88.333 & \textbf{97.222} \\ \hline
+\textbf{R10-S90} & 100.00 & 90.000 & 96.667 & 98.889 & 98.889 & 96.667 & \textbf{96.852} \\ \hline
+\textbf{R100-S0} & 100.00 & 92.000 & 98.000 & 96.000 & 78.000 & 90.000 & \textbf{92.333} \\ \hline
 \end{tabular}
-\caption{Class-wise classification accuracy of a VGG19 network trained on different ratios of synthetic data.}
+\caption{Class-wise classification accuracy of a VGG19 network trained on different ratios of synthetic data to real data.}
 \label{tab:vgg19-results}
 \end{table}
 
 \section{Findings}
 
-In our experiments, synthetic data has been found to enhance the classification accuracy of both the VGG16 and the VGG19 models. We note that using the purely real datasets, the VGG16 network reached a classification accuracy of 94.333\%, while using the 10\% real data training set resulted in an accuracy of 97.037\%. Moreover, the VGG19 network achieved an accuracy of 92.333\% using only real data, compared to an accuracy of 97.222\% as a result of using the 5\% real data training set.
+In our experiments, synthetic data has been found to enhance the classification accuracy of both the VGG16 and the VGG19 models. We note that using the \textit{R0-S100} data split, the VGG16 network reached a classification accuracy of 94.333\%, while using the \textit{R10-S90} split resulted in an accuracy of 97.037\%. Moreover, the VGG19 network achieved an accuracy of 92.333\% using the \textit{R0-S100}, compared to an accuracy of 97.222\% as a result of using the \textit{R5-S95} data split.
 
 Furthermore, we notice that the small parts with the highest class-wise accuracy are \textit{Flat Head} and \textit{Longhex Large}. Compared to their counterparts, those two small parts have a unique aesthetic. Hex Large and Hex small look similar, and the same goes for Mushroom Large and Mushroom Small.
 
