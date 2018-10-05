@@ -1,5 +1,7 @@
 \documentclass[a4paper,12pt,twoside]{report}
 
+\usepackage{amsmath}
+\usepackage{mathrsfs}
 \usepackage{acronym}
 \usepackage{url}
 \usepackage{cite}
@@ -25,7 +27,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[capitalize, noabbrev]{cleveref}
 
-% Path for graphics
+
+% Path for graphicss
 \graphicspath{{figures/}}
 
 \begin{document}
@@ -35,11 +38,11 @@
 \def\doctype{Master's Thesis}
 \def\faculty{Informatik}
 \def\title{Using Synthetic Data for Classification of Small Parts}
-\def\titleGer{Verwendung synthetische Daten für die Kleinteilen erkennung}	%TODO add title in German
+\def\titleGer{Verwendung synthetischer Daten für die Kleinteil-Erkennung}
 \def\supervisor{Prof. Bernd Brügge, Ph.D.}
 \def\advisor{Sajjad Taheritanjni, M.Sc.}
 \def\author{Amr Abdelraouf}
-\def\date{15.10.2018}		%TODO add submission / handover date
+\def\date{13.10.2018}
 
 
 \hypersetup{pdfborder={0 0 0},
@@ -83,7 +86,7 @@
 \headheight=15pt
 
 \include{chapters/1-Introduction}
-%\include{chapters/2-Background}
+\include{chapters/2-Background}
 \include{chapters/3-RelatedWork}
 \include{chapters/4-Analysis}
 \include{chapters/5-SystemDesign}
@@ -92,7 +95,7 @@
 \include{chapters/8-Summary}
 
 \appendix
-\include{tex/acronyms}
+%\include{tex/acronyms}
 
 \clearpage
 
@@ -103,6 +106,6 @@
 \clearpage
 
 \bibliography{thesis}
-\bibliographystyle{alpha}
+\bibliographystyle{acm}
 
 \end{document}

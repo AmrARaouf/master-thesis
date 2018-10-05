@@ -1,4 +1,4 @@
-\chapter{System design}
+\chapter{System design}\label{ch:system_design}
 
 In the previous chapter, we have extracted the functional and non-functional requirements of our system. Subsequently, we broke down our system into use cases in the Use Case Model [\ref{fig:UCM}]. Furthermore, we have described the entities of our system and the relationships between them using an Analysis Object Model [\ref{fig:AOM}].
 
@@ -6,7 +6,7 @@ In this chapter we map our analysis into the solution domain. We group the objec
 
 \section{Design Goals}
 
-In the previous chapter we have defined our Non-functional requirements. In this chapter, we use those non-functional requirements to extract our design goals, and we use those design goals as a compass for our system design. Defining our design goals allows us make consistent design decisions accross our different subsystems. Table [\ref{tab:DG}] lists our non-functional requirements and their corresponding design goal. There are 5 types of possible design criteria from which the design goals can be selected: performance, dependability, cost, maintenance and end user criteria \cite{bruegge2004object}.
+In the previous chapter we have defined our Non-functional requirements. In this chapter, we use those non-functional requirements to extract our design goals, and we use those design goals as a compass for our system design. Defining our design goals allows us make consistent design decisions accross our different subsystems. Table \ref{tab:DG} lists our non-functional requirements and their corresponding design goal. There are 5 types of possible design criteria from which the design goals can be selected: performance, dependability, cost, maintenance and end user criteria \cite{bruegge2004object}.
 
 \begin{table}
   \centering
@@ -22,7 +22,7 @@ In the previous chapter we have defined our Non-functional requirements. In this
 
 \section{Subsystem Decomposition}
 
-Figure [\ref{fig:SSD}] depicts the system's subsystem decomposition. Our system is divided into 3 subsytems: SyntheticImages, RealImages and ImageClassifier.
+Figure \ref{fig:SSD} depicts the system's subsystem decomposition. Our system is divided into 3 subsytems: SyntheticImages, RealImages and ImageClassifier.
 
 \subsection{SyntheticImages}
 SyntheticImages is responsible for providing our system with synthetic images. It consists of 2 main components: SyntheticScene and SyntheticImageGenerator. The SyntheticScene generates an artificial environment and places a 3DModel inside said environment. The SyntheticImageGenerator renders 2D images of the 3D artificial scene.
@@ -43,7 +43,7 @@ The CNNModel consumes the training set and the validation set to utilize them du
 \end{figure}
 
 \section{Hardware Software Mapping}
-This section describes how the subsystems are mapped onto existing hardware and software components. Figure [\ref{fig:DD}] depicts the deployment diagram of our system. Our system contains 4 hardware devices: 2 Ubuntu machines, a Windows machine and a Camera.
+This section describes how the subsystems are mapped onto existing hardware and software components. Figure \ref{fig:DD} depicts the deployment diagram of our system. Our system contains 4 hardware devices: 2 Ubuntu machines, a Windows machine and a Camera.
 
 \begin{figure}[h]
 \centering
@@ -66,7 +66,7 @@ TThe Dataset is stored in the file system of the ImageClassifier device. We use 
 
 \section{Persistent Data Management}
 
-While our system has no need for a database, the implementation of the ImageClassifier requires the output folder of the DataSplitGenerator to be organized in a certain way. The file structure of the DataSplit is shown in figure [\ref{fig:FS}].
+While our system has no need for a database, the implementation of the ImageClassifier requires the output folder of the DataSplitGenerator to be organized in a certain way. The file structure of the DataSplit is shown in figure \ref{fig:FS}.
 
 \subsection{DataSplit Root Folder}
 The DataSplitGenerator outputs file structure. The root folder contains one folder per small part. Each folder is named after its respective Small Part's label.
