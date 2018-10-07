@@ -1,6 +1,6 @@
 \chapter{Analysis}\label{ch:analysis}
 
-The analysis process results in a model of the system that aims to be correct, complete, consistent and unambiguous \cite{bruegge2004object}. In this chapter, we focus on scenario-based analysis. Section \ref{requirements}, identifies the functional and nonfunctional requiremens of the system. In section \ref{system_models}, we describe a use case model that depicts the different interactions between the users and the system. Furthermore, we identify and study the objects of our system.
+The analysis process results in a model of the system that aims to be correct, complete, consistent and unambiguous \cite{bruegge2004object}. In this chapter, we focus on scenario-based analysis. Section \ref{requirements}, identifies the functional and nonfunctional requiremens of the system. In section \ref{system_models}, we describe a use case model that depicts the different interactions between the users and the system. Furthermore, we identify and study the objects of our system in the Analysis Object Model. Finally we present 3 dynamic models.
 
 
 \section{Requirements}\label{requirements}
@@ -48,7 +48,7 @@ In this section we take a closer look at the system models. In section \ref{use_
 \subsection{Use Case Model}\label{use_case_model}
 Use case models represent the relationship between the user group of a system and the general functions that they can execute. A use case model can reduce the complexity of a system and increase its understandability.
 
-The use case model of our system can be found as figure \ref{fig:UCM}. There are three main protagonists in our system. The \textit{3DModelCreator} is responsible for creating 3D models for the given small parts. The \textit{DataGenerator} uses the small parts and their corresponding 3D models to generate synthetic and real image sets. Finally, the \textit{MachineLearningEngineer} is responsible for creating a training, a validation and a testing sets. Moreover, the \textit{MachineLearningEngineer} trains the classification model to identify a set of small parts, and evaluates the model's performance.
+Figure \ref{fig:UCM} depicts the use case model of our system. There are three main protagonists in our system. The \textit{3DModelCreator} is responsible for creating 3D models for the given small parts. The \textit{DataGenerator} uses the small parts and their corresponding 3D models to generate synthetic and real image sets. Finally, the \textit{MachineLearningEngineer} is responsible for creating a training, a validation and a testing sets. Moreover, the \textit{MachineLearningEngineer} trains the classification model to identify a set of small parts, and evaluates the model's performance.
 
 The use case model can be divided into 4 main functions; namely creating 3D models, generating synthetic images, generating real images, and training/evaluating a classification model.
 
@@ -91,7 +91,7 @@ In order to create synthetic images, we need to create 3D models of our small pa
 
 \newpage
 \subsubsection{Generating Synthetic Images}
-Generating synthetic images the cornerstone for a synthetically augmented dataset. There's a lot of work that goes into generating the 3D synthetic scene and the corresponding renditions. Therefore, to increase the understandability of our model, we have separated the the use case that concerns modeling the 3D model as \textit{Specify3DTransformationRange}, and the use case that deals with the synthetic scene environment as \textit{SetUpSyntheticScene}.
+The created 3D models are used to generate a synthetic image set. To increase the understandability of our model, we separate the use case that concerns modeling the 3D model as \textit{Specify3DTransformationRange}, and the use case that deals with the synthetic scene environment as \textit{SetUpSyntheticScene}. Both are included in the use case \textit{GenerateSyntheticImageSet}.
 
 \begin{usecase}
   \addtitle{Use Case}{Specify3DTransformationRange}
@@ -104,7 +104,7 @@ Generating synthetic images the cornerstone for a synthetically augmented datase
   }
 
   \additemizedfield{Entry Condition}{
-    \item A 3D model of a small part has been chosen.
+    \item A 3D model of a small part has been created.
   }
 
   \additemizedfield{Exit Condition}{
@@ -130,7 +130,7 @@ Generating synthetic images the cornerstone for a synthetically augmented datase
   }
 
   \additemizedfield{Entry Condition}{
-    \item A 3D model of a small part has been chosen.
+    \item A 3D model of a small part has been created.
   }
 
   \additemizedfield{Exit Condition}{
@@ -265,66 +265,64 @@ The synthetic and real image sets are combined to form a dataset. Training a cla
 
 \newpage
 \subsection{Analysis Object Model}\label{analysis_object_model}
-The analysis object model is a visual dictionary of the main concepts visible to the user \cite{bruegge2004object}. The analysis object model depicts a system's entites, their corresponding attributes and functions, and illustrates the relationship between said entitie. Figure \ref{fig:AOM} represents the analysis object model of our system.
-
-\subsubsection{SmallPart}
-A small part is the main subject of our system. It is an object that our system aims to classify. Each small part has a unique identifying label string.
-
-\subsubsection{3DModel}
-A 3DModel of a small part is the graphical model which helps our system create synthetic images. Each small part has a corresponding 3DModel. Each 3DModel has the same label as its small part counterpart.
-
-\subsubsection{Transformation}
-Each small part and 3DModel have a list of applicable transformations. A transformation is executed on an axis (x, y or z), and can either be a Translation or a Rotation.
-At image generation time, each transformation outputs a random value between its defined maximum and minimum. We define a range to limit an object's transformation. For instance, we don't want to translate an small part so far as to remove it from the camera's viewfield.
-
-\subsubsection{ImageGenerator}
-ImageGenerator is the class that does the heavy lifting when it comes to creating images. It applies the random transformations on the target object and generates an image with a specified width and height.
-ImageGenerator is an abstraction of 2 classes. SyntheticImageGenerator is responsible for applying the transformations on 3DModels, and using SyntheticScene to generate SyntheticImages, while RealImageGenerator uses a camera to take pictures of SmallMechanicalParts and output their corresponding RealImages.
-
-\subsubsection{Image}
-Image is a generalization of RealImage and SyntheticImage. Image stores information like width, height and label of the image. Moreover it contains a dataBuffer which contains the actual image pixel values.
-
-\subsubsection{Dataset}
-Dataset is a composition of Images. It is the image repository which is used by the ImageClassifier for training and evaluation.
-
-\subsubsection{DataSplitGenerator}
-DataSplitGenerator splits the Dataset into a training set, validation set and testing set. This split prepares the data for consumption by the ImageClassifier.
-
-\subsubsection{CNNModel}
-CNNModel is the convolutional neural network algorithm that is trained for image classification. CNNModel is an abstraction of 4 different CNN architectures, namely Inception, Resnet, VGG16 and VGG19. Furthermore, CNNModel defines the weights that are used to initialize the CNN to leverage the power of transfer learning. CNNModel also sets the number of trainable layers in a network to potentially preserve the initial weights and speed up training.
-
-\subsubsection{Optimizer}
-Each CNNModel has an Optimizer. An Optimizer is the function aims to close the gap between the model's predictions of the validation set labels and their corresponding ground truth. The Optimizer operates in the CNNModel's training phase. Optimizer is an abstraction of 2 different optimizers that we use in our system. Specifically SGD (Stochastic Gradient Descent), and Adam.
-
-\subsubsection{ImageClassifier}
-ImageClassifier orchestrates the feeding of data into the CNNModel for training. Moreover, it uses the testing set to calculate the accuracy of the trained model.
-
-\begin{figure}[H]
-\centering
-  \includegraphics[width=\textwidth]{AOM}
-\caption{The analysis object model of our system identifies our system's objects as well as their attributes and functions.}
-\label{fig:AOM}
-\end{figure}
-
-\subsection{Dynamic Model}\label{dynamic_model}
-The dynamic model is focused on the behavior of the system. Sequence diagrams, activity diagrams and state machines are usually used to depict dynamic models \cite{bruegge2004object}. In this section we present 3 activity diagrams, each depicts a workflow in our system. Namely, the workflow to create a real image set from a small part, the workflow to create the small part's 3D model and subsequently generate the synthetic image set of the small part, and the workflow to train a classification model using both image sets.
+The analysis object model is a visual dictionary of the main concepts visible to the user \cite{bruegge2004object}. The analysis object model depicts a system's entites, their corresponding attributes and functions, and illustrates the relationship between said entitie. Figure \ref{fig:AOM1} and figure \ref{fig:AOM2} are represent the analysis object models of our system. We divide our model into 2 UML packages, namely, \textit{Dataset Generation} and \textit{Image Classification} depicted in figures \ref{fig:AOM1} and \ref{fig:AOM2} respectively. Dataset Generation presents the objects required to create 3d models of small parts and subsequently generate a dataset of real and synthetic images. Image Classification displays the objects used to utilize the generated dataset for the training and evaluation of a CNN model, which we use to classify our small parts.
 
 \subsubsection{Dataset Generation}
-Figure \ref{fig:AD1} depicts the workflow of activities required to generate a dataset. The DataGenerator selects a small part and its corresponding 3D model. The DataGenerator then proceeds to generate the real and synthetic images. Finally the images are combined to form a dataset.
+To generate our dataset, we first need to create \textbf{3DModels} of our \textbf{SmallParts}. A \textbf{3DScanner} is used to scan a SmallPart and generate the corresponding 3DModel. Each SmallPart and its reciprocal 3DModel have a label string which it later used by the image classifier as the object class.
+
+SmallParts and 3DModels both implement the \textbf{Transformable} interface. Each Transformable has multiple \textbf{Transformations}, and can apply the transform function. Transformation is an abstraction of \textbf{Translation} and \textbf{Rotation}. Each Transformation has an axis (x, y or z) and a range; Translations define minmum and maximum distances, while Rotations define minimum and maximum angles. Aditionally, each transformation has a function to generate a random value within the defined range. This function is used to transform the object randomly before generating a real or synthetic image.
+
+\textbf{ImageGenerator} is a generalization of \textbf{Camera}, which generates \textbf{RealImages}, and \textbf{3DModelingSoftware}, which generates \textbf{SyntheticImages}. ImageGenerators define the output number of images, as well as their width and height. Moreover, they apply random transformations to their target transformable before generating each image. Each 3DModelingSoftware has a \textbf{SyntheticScene} where the background and lighting conditions of the synthetic images are defined.
+
+RealImage and SyntheticImage are both specializations of the \textbf{Image} class. Each Image has a width, height, label (which corresponds to the label of the depicted SmallPart of 3DModel), and a data buffer which holds the values of the image pixels. Lastly, the \textbf{Dataset} is a composition of multiple Images.
 
 \begin{figure}[H]
 \centering
-  \includegraphics[width=0.65\textwidth]{AD1}
-\caption{Activity Diagram depicting the workflow required for Dataset generation.}
+  \includegraphics[width=\textwidth]{AOM1}
+\caption{UML package of the analysis object model which models dataset generation.}
+\label{fig:AOM1}
+\end{figure}
+
+\subsubsection{Image Classification}
+After the dataset has been generated, it is split into a training set, a validation set and a testing set by the \textbf{DatasetSplitter}. The DatasetSplitter sets the size of each set as well as the ratio of synthetic to real images in the training set. The \textbf{ImageClassifier} uses the split dataset to train and evaluate a \textbf{CNNModel}. The CNNModel defines the model weights as well as the hyperparameters: batch size, number of epochs, and, number of frozen layers. CNNModel is an abstraction of 4 different convolutional neural networks: \textbf{InceptionV3} \cite{szegedy2016rethinking}, \textbf{Resnet50} \cite{he2016deep}, \textbf{VGG16} \cite{simonyan2014very} and \textbf{VGG19} \cite{simonyan2014very}. CNNModel uses the \textbf{Optimizer} to adjust the model weights in the training phase. Optimizer is a generalization of 2 concrete optimizers: Stochastic Gradient Descent \textbf{(SGD)} and \textbf{Adam} \cite{kingma2014adam}.
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=\textwidth]{AOM2}
+\caption{UML package of the analysis object model which depicts the objects that are used for image classification.}
+\label{fig:AOM2}
+\end{figure}
+
+\newpage
+\subsection{Dynamic Model}\label{dynamic_model}
+The dynamic model is focused on the behavior of the system. Sequence diagrams, activity diagrams and state machines are usually used to depict dynamic models \cite{bruegge2004object}. In this section we present 3 activity diagrams, each depicts a workflow in our system. Namely, the workflow to create a real image set from a small part, the workflow to create the small part's 3D model and subsequently generate the synthetic image set of the small part, and the workflow to train a classification model using the dataset that combines both generated image sets.
+
+\subsubsection{Synthetic Image Set Generation}
+Figure \ref{fig:AD1} depicts the workflow of activities required to generate a synthetic image set. The 3DModelCreator uses a 3D scanner to create a 3D model of a small part. Next, the DataGenerator sets the 3D model transformations and creates the synthetic scene in the 3D modeling software. Finally, the software is used to geenrate a synthetic image set.
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=0.85\textwidth]{AD1}
+\caption{Activity Diagram depicting the workflow required for synthetic image set generation.}
 \label{fig:AD1}
 \end{figure}
 
-\subsubsection{Obtain Image Classifier}
-Figure \ref{fig:AD2} describes the workflow of activities required to obtain the image classifier. The MachineLearningEngineer splits the data into training, validation and testing sets. The MachineLearningEngineer then creates a CNN model. Next the MachineLearningEngineer feeds the training data to the CNN model to obtained a trained CNN model. The MachineLearningEngineer then evaluates the trained CNN model accuracy using the testing set. If the accuracy of the trained CNN model is not sufficient, the CNN model is fine tuned and re-trained.
+\subsubsection{Real Image Set Generation}
+The workflow of activities required to generate a real image set is depicted in figure \ref{fig:AD2}. The DataGenerator selects a small part. The small part is transformed and the camera is used to take a picture. The process is repeated until the desired number of real images is reached.
 
 \begin{figure}[H]
 \centering
-  \includegraphics[width=0.7\textwidth]{AD2}
-\caption{Activity Diagram describing the workflow required to obtain the Image Classifier.}
+  \includegraphics[width=0.75\textwidth]{AD2}
+\caption{Activity Diagram depicting the workflow required for real image set generation.}
 \label{fig:AD2}
+\end{figure}
+
+\subsubsection{Image Classification}
+Figure \ref{fig:AD3} describes the workflow of activities required to create the image classifier. The MachineLearningEngineer splits the data into training, validation and testing sets. The MachineLearningEngineer then creates a CNN model. The training and validation sets are used to train the CNN model. Next, the model accuracy is evaluated using the testing set. If the accuracy of the trained CNN model is not sufficient, the hyperparameters are fine tuned and the CNN model re-trained.
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=0.85\textwidth]{AD3}
+\caption{Activity Diagram describing the workflow required to train a CNN model and create an image classifier.}
+\label{fig:AD3}
 \end{figure}
