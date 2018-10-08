@@ -79,6 +79,8 @@ Unlike cases where the background can provide information, the background is non
 \subsection{Real and Synthetic Images}
 To automatically classify small parts, we build a convolutional neural network that is trained on both \textbf{real images} and \textbf{synthetic images}. We define real images as the natural images of the small parts, taken using a camera. Synthetic images, on the other hand, are artifically created images. They are 2-dimensional renditions of \textbf{3d models} of small parts. To generate synthetic images, we must create a \textbf{synthetic scene}: an artifical environment created in 3D modeling software. Figure \ref{fig:synthetic_scene} shows an example of a synthetic scene. A 3d model is placed in a synthetic scene in 3D modeling software. The software renders a 2D image of the environment to create a synthetic scene.
 
+The real and synthetic images should capture the small parts and their corresponding 3D models from different angles and in different positions. To do so, we apply \textbf{transformations} to the small parts and 3D models. There are two types of trnasformations: \textbf{translation} to change the position of the target object, and \textbf{rotation} to change the angle. Each transformation has a range. This prevents the target objects from being translated or rotated away from the camera view.
+
 \begin{figure}[h]
 \centering
   \includegraphics[width=\textwidth]{rhino_screenshot}
