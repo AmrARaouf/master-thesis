@@ -1,30 +1,35 @@
 \chapter{Summary}\label{ch:summary}
 
-In this chapter we recap the work that we have done. We summarize the status of the project by relating to the functional and non-functional requirements that were previously identified. We present a conclusion of our results and propose a direction for future work that can further advance the usage of synthetic data in immage classification.
+In this chapter we recap the work that we have done. We summarize the status of the project by relating to the functional that were previously identified in section \ref{sec:status}. In section \ref{sec:conclusion} we present a conclusion of our results and in section \ref{sec:future} propose a direction for future work that can further advance the usage of synthetic data in immage classification.
 
-\section{Status}
 
-Table [\ref{tab:FRS}] displays a short summary of the functional requirements that we have identified earlier, as well as a short description of how they were implemented in the solution domain.
+\section{Status}\label{sec:status}
+
+Table \ref{tab:FRS} displays the functional requirements that we have identified earlier in chapter \ref{ch:analysis}. Furthermore, A description of how these requirements were implemented in the solution domain is provided. If applicable, we analyse why a requirement has not been realized.
 
 \begin{table}[h]
+\centering
 \begin{tabular}{|l|l|}
 \hline
 \textbf{Functional Requirement} & \textbf{Implementation} \\ \hline
-\begin{tabular}[c]{@{}l@{}}Generate Synthetic\\ Images\end{tabular} & \begin{tabular}[c]{@{}l@{}}Generating the synthetic images is\\ implemented in Rhinoceros throught the\\ creation of a SyntheticScene and\\ utilization of the SyntheticImageGenerator\\ component.\end{tabular} \\ \hline
+Create 3D Model & \begin{tabular}[c]{@{}l@{}}We are able to create 3D models of\\ our small parts using the 3DScanner\\ device. However the output 3D\\ models were imprecise and could not\\ capture the details of the small parts.\\ We instead downloaded readily\\ available 3D models.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Generate Synthetic\\ Image Set\end{tabular} & \begin{tabular}[c]{@{}l@{}}Generating the synthetic image set\\ is implemented using ready made\\ 3D models,  the creation of\\ synthetic scenes and rendering 2D\\ synthetic images in Rhinoceros.\end{tabular} \\ \hline
 \begin{tabular}[c]{@{}l@{}}Set 3D Model\\ Transformation Range\end{tabular} & \begin{tabular}[c]{@{}l@{}}The transformation ranges for each\\ 3D model are set in the python script\\ that Rhino executes to generate the\\ synthetic images.\end{tabular} \\ \hline
-Take Real Images & \begin{tabular}[c]{@{}l@{}}The RealImageGenerator uses the\\ Camera component to take real images.\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}l@{}}Generate Input\\ Data Split\end{tabular} & \begin{tabular}[c]{@{}l@{}}In the ImageClassifier subsystem, the\\ DataSplitGenerator splits the images in\\ the Dataset component into a training\\ set, a validation set and a test set.\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}l@{}}Train Classification\\ Model\end{tabular} & \begin{tabular}[c]{@{}l@{}}The CNNModel can be trained using\\ the training and validation data for\\ training.\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}l@{}}Evaluate\\ Classification Model\end{tabular} & \begin{tabular}[c]{@{}l@{}}We can evaluate the classification\\ accuracy of the CNNModel by\\ predicting the labels of the testing set.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Generate Real\\ Image Set\end{tabular} & \begin{tabular}[c]{@{}l@{}}A camera is used to take real images\\ of the small parts which are then\\ resized by the RealImageProcessor\\ component in the RealImageGenerator\\ device.\end{tabular} \\ \hline
+Split Input Dataset & \begin{tabular}[c]{@{}l@{}}In the ImageClassifier device, the\\ DataSplitter divides the images in\\ the Dataset component into a training\\ set, a validation set and a testing set.\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Train Classification\\ Model\end{tabular} & \begin{tabular}[c]{@{}l@{}}The CNNModel  is trained and fine\\ tuned using the training and\\ validation sets\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}Evaluate\\ Classification Model\end{tabular} & \begin{tabular}[c]{@{}l@{}}We evaluate the classification\\ accuracy of the CNNModel by\\ predicting the labels of the testing set.\end{tabular} \\ \hline
 \end{tabular}
 \caption{The functional requirements that we have defined in the Analysis chapter and how those requirements were implemented in the solution domain.}
 \label{tab:FRS}
 \end{table}
 
-\section{Conclusion}
 
-The main objective of our work was to decrease the amount of manual labour required to label a dataset of small parts. We proposed a system that facilitates the usage of synthetic data in image classification. Furthermore, we carried out an experiment to evaluate the usage of synthetic images to train a convolutional neural network to classify images of small parts. Our results indicate that a CNN trained on a mixture of synthetic and real images can provide a comparable classification accuracy to CNNs that have been trained on purely real data, while maintaining the advantage of requiring less real images, which are labor-intensive time-consuming to obtain.
+\section{Conclusion}\label{sec:conclusion}
 
-\section{Future Work}
+The main objective of our work was to decrease the amount of manual labour required to label a dataset of small parts. We proposed a system that facilitates the usage of synthetic data in image classification. Furthermore, we carried out an experiment to evaluate the usage of synthetic images to train a convolutional neural network to classify images of small parts. Our results indicate that a CNN trained on a mixture of synthetic and real images can provide a comparable classification accuracy to CNNs that have been trained on purely real images. This is advantagous in situations where a large dataset of images is not available for new classes.
 
-There are several possible directions for future improvements over the work that has been presented in our thesis. Our results indicate that, when adding new classes, the output classification accuracy is affected by the aesthetic similarity of small parts in the dataset. A logical next step is to evaluate the CNNs after increasing the number of output classes. Another possible improvement is to evaluate the work using bigger CNN architecures such as the ones presented in \cite{he2016deep} and \cite{szegedy2015going}.
+
+\section{Future Work}\label{sec:future}
+
+We propose 3 possible directions for future improvements over the work that has been presented in our thesis. Firstly, our results indicate that, when adding new classes, the output classification accuracy is affected by the aesthetic similarity of small parts in the dataset. A logical next step is to evaluate the CNNs after increasing the number of output classes. Secondly, a possible improvement is to evaluate the usage of deeper CNN models such as the ones presented by He et al. \cite{he2016deep} and Szegedy et al. \cite{szegedy2016rethinking}. Thirdly, the total number of synthetic images in the training set has not been varied throughout our experiments. A possible improvement in accuracy could be achieved by training the CNN models on a bigger training set containing a larger amount of synthetic images.
