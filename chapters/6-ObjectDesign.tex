@@ -1,9 +1,29 @@
 \chapter{Object Design}\label{ch:object_design}
-In the Analysis chapter, we identified the objects in our system by creating the analysis object model. During the System Design chapter, we mapped our objects to components and we defined the hardware and software platforms that host those components.
+In chapter \ref{ch:analysis}, we identified the objects in our system by creating the analysis object model. In chapter \ref{ch:system_design}, we mapped our objects to components and we defined the hardware and software platforms that host those components.
 
-During hardware/software mapping, we have identified off-the-shelf components that we used throughout our system. Namely Keras and Rhinoceros. In this chapter, we close the gap between the application objects and the off-the-shelf components by identifying additional solution objects and refining existing objects \cite{bruegge2004object}.
+During hardware/software mapping, we have identified off-the-shelf components that we used throughout our system. Namely Keras, Rhinoceros Artec Studio and Artec Space Spider. In this chapter, we close the gap between the application objects and the off-the-shelf components by identifying additional solution objects and refining existing objects \cite{bruegge2004object}.
 
-\section{Keras}
+Section \ref{sec:artec} presents the Artec Space Spider 3D scanner and the Artec Studio 3D scanning software. It also describes how they are used to create 3D models. In section \ref{sec:rhino} we present the 3D modeling software Rhinoceros and how it is used to create synthetic images. Finally, in section \ref{sec:keras}, we introduce Keras and Tensorflow, and we describe how they are used to create an image classifier.
+
+\section{Artec Space Spider and Artec Studio}\label{sec:artec}
+Artec Space Spider\footnote{https://www.artec3d.com/portable-3d-scanners/artec-spider} is a high-resolution 3D scanner based on blue light technology. It is built for capturing small objects or intricate details of large industrial objects in high resolution, with steadfast accuracy and precise color.
+
+Artec Studio\footnote{https://www.artec3d.com/3d-software/artec-studio} is a 3D scanning and data processing software. It is used hand in hand with the Artec Space Spider 3D scanner to create 3D models.
+
+\subsection{Usage}
+We use the Artec Space Spider 3D scanner to scan our small part from multiple angles. The different scans are then sent to Artec Studio for processing. Artec Studio provides a functionality that detects features in multiple scans and automatically combines the scans to form a 3D model. Moreover, Artec Studio automatically removes outlier points in the scans and. We also used Artec Studio to identify the horizontal plane where the small part was lying during the scan. The plane is then removed from the output 3D model. After the scans have been combined to construct a 3D model, Artec Studio automatically fills the holes in the object where there are missing scans.
+
+\section{Rhinoceros}\label{sec:rhino}
+Rhinoceros\footnote{https://www.rhino3d.com} (Rhino for short) is a 3D modeling software. Rhino can create, edit, analyze, document, render, animate, and translate curves, surfaces, solids, point clouds, and polygon meshes.
+
+We choose Rhino to create our synthetic data because it has a python library called \textit{RhinoScriptSyntax}. RhinoScriptSyntax provides an API for object transformation, scene manipulation and image rendering in python. Moreover, the Rhino software hosts a python interpreter and consequently supports running python scripts directly in the software. RhinoScriptSyntax and the hosted python interpreter are used to automate repetitive tasks that can otherwise consume more time if executed manually.
+
+\subsection{Usage}
+We use Rhino to create our synthetic scene. We set the background and the lighting conditions of the environment, then we import our 3D model and place it horizontally on the background.
+
+Furthermore, we use RhinoSyntaxScript over python to create our synthetic images. After setting up the synthetic scene in Rhino, we write a python script that executes random transformations over our 3D model. Next, we use a RhinoSyntaxScript function that renders and saves a 2D image of the scene. In the python script, we specify the desired number of output images. Rhino repeats the transformation and rendering process accordingly.
+
+\section{Keras and Tensorflow}\label{sec:keras}
 Keras is a high-level neural networks API, written in Python and capable of running on top different backends such as Tensorflow, CNTK or Theano \cite{chollet2015keras}. Keras focuses on being a user friendly API. It minimizes the number of actions required to develop common neural networks. Furthermore, Keras is designed modularly. Neural layers, optimizers, cost functions and regularization schemes are shipped as standalone components that can be easily used to create new models.
 
 Our system runs Keras over Tensorflow. Tensorflow is an open source software library for high performance numerical computation and a machine learning framework \cite{tensorflow2015-whitepaper}. Tensorflow is a flexible library that can be used to express neural network algorithms in a wide variety of domains.
@@ -11,14 +31,4 @@ Our system runs Keras over Tensorflow. Tensorflow is an open source software lib
 \subsection{Usage}
 Keras provides an out-of-the-box implementation of different CNN models, optimizers and cost functions. We took advantage of Keras's modular components to build and fine tune our CNN models and their respective optimizers with ease.
 
-Furthermore, Keras provides an image loader, called \textit{ImageDataGenerator}. ImageDataGenerator feeds the training, validation and testing data to the CNN models from a folder directory. Consequently, we built our DataSplitGenerator using Keras's image loader.
-
-\section{Rhinoceros}
-Rhinoceros (Rhino for short) is a 3D modeling software. Rhino can create, edit, analyze, document, render, animate, and translate curves, surfaces, solids, point clouds, and polygon meshes\footnote{https://www.rhino3d.com}.
-
-We choose Rhino to create our synthetic data because it has a python library called \textit{RhinoScriptSyntax}. RhinoScriptSyntax provides an API for object transformation, scene manipulation and image rendering in python. Moreover, the Rhino software hosts a python interpreter and consequently supports running python scripts directly in the software. RhinoScriptSyntax and the hosted python interpreter are used to automate repetitive tasks that can otherwise consume more time if executed manually.
-
-\subsection{Usage}
-We use Rhino to create our synthetic scene. We set the background and the lighting conditions of the environment, then we import our 3D model and place it horizontally on the background.
-
-Furthermore, we use RhinoSyntaxScript over python to create our SyntheticImageGenerator. After setting up the synthetic scene in Rhino, we write a python script that executes random transformations over our 3D model. Next, we use a RhinoSyntaxScript function that renders and saves a 2D image of the scene. In the python script, we specify the desired number of output images. Rhino repeats the transformation and rendering process accordingly.
+Furthermore, Keras provides an image loader, called \textit{ImageDataGenerator}. ImageDataGenerator feeds the training, validation and testing data to the CNN models from a folder directory. Consequently, we built our DatasetSplitter using Keras's image loader.
