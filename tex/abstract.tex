@@ -1,19 +1,9 @@
 \begin{abstract}
 
-\iffalse
-Recent advances in Convolutional Neural Networks (CNN) have been able to conquer Computer Vision tasks and even surpass human performance. CNN algorithms are characteristically data-hungry, and obtaining domain-specific labeled data is often a cumbersome manual resource-heavy task. In this text we explore the use of synthetic data to train a CNN to perform image classification of different fasteners.
+Aircraft engines periodically undergo an overhaul process where the engine parts are dismantled and then later reassembled. When the engine components are taken apart, thousends of small parts (screws, nuts, bolts, etc..) are unfastened. To facilitate the step of engine reassembly, the small parts have to be sorted and classified.
 
-\textit{Note:}
+In this thesis we present a system to automatically classify small parts using convolutional neural networks. To train the neural networks, we use 3D models of the small parts to render synthetic images. The network is trained using a mixture of images of the small parts and synthetic images of their corresponding 3D models. We examine the use of a fully synthetic image set for training, as well as different ratios of real and synthetic images.
 
-\textit{\textbf{1. paragraph:} What is the motivation of your thesis? Why is it interesting from a scientific point of view? Which main problem do you like to solve?}
+Our results indicate that a convolutional neural network trained on a dataset that contains as little as 5\% real images can provide a comparable classification accuracy to networks that have been trained on purely real image sets. This is advantagous in supervised learning problems where an annotated dataset of images is not available for a novel domain.
 
-The motivation for my thesis stems from CNN algorithms' hunger for labeled images in order to train for classification tasks and produce performant results. Obtaining a large corpus of labeled images is a difficult task, especially when we wish to train a network to classify a domain-specific dataset.
-
-\textit{\textbf{2. paragraph:} What is the purpose of the document? What is the main content, the main contribution?}
-In this document we explore the use of synthetic images to augment the training data for a given CNN. We explore the power of synthetic data to produce acceptable results while using as little real data as possible. The intuition comes from the ease of rendering a large synthetic dataset on demand.
-
-\textit{\textbf{3. paragraph:} What is your methodology? How do you proceed?}
-We explore the ratio of synthetic to real images that can be used for training a CNN and obtain good results.
-*/
-\fi
 \end{abstract}
