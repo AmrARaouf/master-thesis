@@ -91,10 +91,10 @@ In order to create synthetic images, we need to create 3D models of our small pa
 
 \newpage
 \subsubsection{Generating Synthetic Images}
-The created 3D models are used to generate a synthetic image set. To increase the understandability of our model, we separate the use case that concerns modeling the 3D model as \textit{Specify3DTransformationRange}, and the use case that deals with the synthetic scene environment as \textit{SetUpSyntheticScene}. Both are included in the use case \textit{GenerateSyntheticImageSet}.
+The created 3D models are used to generate a synthetic image set. To increase the understandability of our model, we separate the use case that concerns modeling the 3D model as \textit{SetTransformationRange}, and the use case that deals with the synthetic scene environment as \textit{SetUpSyntheticScene}. Both are included in the use case \textit{GenerateSyntheticImageSet}.
 
 \begin{usecase}
-  \addtitle{Use Case}{Specify3DTransformationRange}
+  \addtitle{Use Case}{SetTransformationRange}
 
   \addfield{Participating Actors}{DataGenerator}
 
@@ -284,7 +284,7 @@ RealImage and SyntheticImage are both specializations of the \textbf{Image} clas
 \end{figure}
 
 \subsubsection{Image Classification}
-After the dataset has been generated, it is split into a training set, a validation set and a testing set by the \textbf{DatasetSplitter}. The DatasetSplitter sets the size of each set as well as the ratio of synthetic to real images in the training set. The \textbf{ImageClassifier} uses the split dataset to train and evaluate a \textbf{CNNModel}. The CNNModel defines the model weights as well as the hyperparameters: batch size, number of epochs, and, number of frozen layers. CNNModel is an abstraction of 4 different convolutional neural networks: \textbf{InceptionV3} \cite{szegedy2016rethinking}, \textbf{Resnet50} \cite{he2016deep}, \textbf{VGG16} \cite{simonyan2014very} and \textbf{VGG19} \cite{simonyan2014very}. CNNModel uses the \textbf{Optimizer} to adjust the model weights in the training phase. Optimizer is a generalization of 2 concrete optimizers: Stochastic Gradient Descent \textbf{(SGD)} and \textbf{Adam} \cite{kingma2014adam}.
+After the dataset has been generated, it is split into a training set, a validation set and a testing set by the \textbf{DatasetSplitter}. The DatasetSplitter sets the size of each set as well as the ratio of synthetic to real images in the training set. The \textbf{ImageClassifier} uses the split dataset to train and evaluate a \textbf{CNNModel}. The CNNModel defines the model weights as well as the hyperparameters: batch size, number of epochs, and, number of frozen layers. CNNModel uses the \textbf{Optimizer} to adjust the model weights in the training phase.
 
 \begin{figure}[H]
 \centering

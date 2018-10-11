@@ -5,24 +5,7 @@ In this chapter we recap the work that we have done. We summarize the status of 
 
 \section{Status}\label{sec:status}
 
-Table \ref{tab:FRS} displays the functional requirements that we have identified earlier in chapter \ref{ch:analysis}. Furthermore, A description of how these requirements were implemented in the solution domain is provided. If applicable, we analyse why a requirement has not been realized.
-
-\begin{table}[h]
-\centering
-\begin{tabular}{|l|l|}
-\hline
-\textbf{Functional Requirement} & \textbf{Implementation} \\ \hline
-Create 3D Model & \begin{tabular}[c]{@{}l@{}}We are able to create 3D models of\\ our small parts using the 3DScanner\\ device. However the output 3D\\ models were imprecise and could not\\ capture the details of the small parts.\\ We instead downloaded readily\\ available 3D models.\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}l@{}}Generate Synthetic\\ Image Set\end{tabular} & \begin{tabular}[c]{@{}l@{}}Generating the synthetic image set\\ is implemented using ready made\\ 3D models,  the creation of\\ synthetic scenes and rendering 2D\\ synthetic images in Rhinoceros.\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}l@{}}Set 3D Model\\ Transformation Range\end{tabular} & \begin{tabular}[c]{@{}l@{}}The transformation ranges for each\\ 3D model are set in the python script\\ that Rhino executes to generate the\\ synthetic images.\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}l@{}}Generate Real\\ Image Set\end{tabular} & \begin{tabular}[c]{@{}l@{}}A camera is used to take real images\\ of the small parts which are then\\ resized by the RealImageProcessor\\ component in the RealImageGenerator\\ device.\end{tabular} \\ \hline
-Split Input Dataset & \begin{tabular}[c]{@{}l@{}}In the ImageClassifier device, the\\ DataSplitter divides the images in\\ the Dataset component into a training\\ set, a validation set and a testing set.\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}l@{}}Train Classification\\ Model\end{tabular} & \begin{tabular}[c]{@{}l@{}}The CNNModel  is trained and fine\\ tuned using the training and\\ validation sets\end{tabular} \\ \hline
-\begin{tabular}[c]{@{}l@{}}Evaluate\\ Classification Model\end{tabular} & \begin{tabular}[c]{@{}l@{}}We evaluate the classification\\ accuracy of the CNNModel by\\ predicting the labels of the testing set.\end{tabular} \\ \hline
-\end{tabular}
-\caption{The functional requirements that we have defined in the Analysis chapter and how those requirements were implemented in the solution domain.}
-\label{tab:FRS}
-\end{table}
+We look back at the functional requirements that we have defined in chapter \ref{ch:analysis}. We are able to create 3D models of our small parts using the 3DScanner device. However the output 3D models were imprecise and could not capture the details of the small parts. We instead downloaded readily available 3D models. Generating the synthetic image set is implemented using ready made 3D models, the creation of synthetic scenes and rendering 2D synthetic images in Rhinoceros. The transformation ranges for each 3D model are set in the python script that Rhino executes to generate the synthetic images. A camera is used to take real images of the small parts which are then resized by the RealImageProcessor component in the RealImageGenerator device. In the ImageClassifier device, the DatasetSplitter divides the images in the Dataset component into a training set, a validation set and a testing set. The ImageClassifier trains a CNNMosel using the training and validation sets, and evaluates its classification accuracy using the testing set.
 
 
 \section{Conclusion}\label{sec:conclusion}

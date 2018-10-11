@@ -24,16 +24,16 @@ In the previous chapter we have defined our non-functional requirements. In this
 
 \section{Subsystem Decomposition}\label{sec:subsystem_decomposition}
 
-Figure \ref{fig:SSD} depicts our system's subsystem decomposition. Our system is divided into 3 subsytems. \textbf{SyntheticImageSubsystem} is responsible for providing our system with synthetic images. It consists of 4 main components: \textbf{3DScanner}, \textbf{3DScanningSoftware}, \textbf{3DScanningSoftware}, \textbf{SyntheticScene} and \textbf{3DModelingSoftware}. The 3DScanner scans small parts and ouputs raw 3D model, which are processes by the 3DModelingSoftware to produce a 3D model. The SyntheticScene generates an artificial environment. The 3DModelingSoftware places the 3D models in the environment created by SyntheticScene, and renders synthetic images of the 3D models.
+Figure \ref{fig:SSD} depicts our system's subsystem decomposition. Our system is divided into 3 subsytems. \textbf{SyntheticImageSubsystem} is responsible for providing our system with synthetic images. It consists of 4 main components: \textbf{3DScanner}, \textbf{3DScanningSoftware}, \textbf{3DScanningSoftware}, \textbf{SyntheticScene} and \textbf{3DModelingSoftware}. The 3DScanner scans \textbf{SmallParts} and ouputs raw 3D model, which are processes by the 3DModelingSoftware to create a \textbf{3DModel}. The SyntheticScene generates an artificial environment. The 3DModelingSoftware places the 3D models in the environment created by SyntheticScene, and renders \textbf{SyntheticImages} of the 3D models.
 
-On the other hand, \textbf{RealImageSubsystem} is responsible for providing our system with real images. The \textbf{Camera} is used to take real images of the small parts. Next, the \textbf{RealImageProcessor} resizes the raw images to provide our system with real images that can be used out of the box.
+On the other hand, \textbf{RealImageSubsystem} is responsible for providing our system with real images. The \textbf{Camera} is used to take real images of the SmallParts. Next, the \textbf{RealImageProcessor} resizes the raw images to provide our system with \textbf{RealImages} that can be used out of the box.
 
-The synthetic images created by the SyntheticImageSubsystem and the real images created by the RealImageSubsystem are both sent to the \textbf{ImageClassifierSubsystem}. The ImageClassifierSubsystem in turn combines both image sets to create a \textbf{Dataset}. The images are then fed to the \textbf{DatasetSplitter}, which is in turn responsible for splitting the data into a training set, a validation set and a testing set. The \textbf{CNNModel} utilizes the training and validation sets during the training phase. The testing set is then used to determine the accuracy of the trained CNNModel.
+The synthetic images created by the SyntheticImageSubsystem and the real images created by the RealImageSubsystem are both sent to the \textbf{ImageClassifierSubsystem}. The ImageClassifierSubsystem in turn combines both image sets to create a \textbf{Dataset}. The images are then fed to the \textbf{DatasetSplitter}, which is in turn responsible for splitting the data into a training set, a validation set and a testing set. The \textbf{ImageClassiefier} uses the training and validation sets to train a \textbf{CNNModel}. The CNNModel uses an \textbf{Optimizer} to adjust the model weights during the training phase. The testing set is then used to evaluate the accuracy of the trained CNNModel.
 
 \begin{figure}[H]
 \centering
   \includegraphics[width=\textwidth]{SSD}
-\caption{Subsystem decomposition showing the SyntheticImageSubsystem, the RealImageSubsystem, the ImageClassifierSubsystem and the relationships between them.}
+\caption{Subsystem decomposition showing the SyntheticImageSubsystem, the RealImageSubsystem, the ImageClassifierSubsystem and the services that they provide and consume.}
 \label{fig:SSD}
 \end{figure}
 
@@ -44,7 +44,7 @@ This section describes how the subsystems are mapped onto existing hardware and 
 
 The \textbf{Camera} is used to capture raw images of the small parts. We use the Camera application on an iPhone 6. The \textbf{RealImageGenerator} runs a Python environment. We use the Python commands to resize the the raw images of the small parts captured by the camera. The resized real images are then ready to be fed to the image classifier.
 
-The Dataset is stored in the file system of the \textbf{ImageClassifier} device. We use the device's Python environment to run the Datasplitter and the CNNModel. Furthermore, we use \textbf{Keras} \cite{chollet2015keras}, a neural networks API that provides out-of-the-box CNN implementations. The ImageClassifier deviceis equipped with a graphics processing unit (GPU). The GPU is used for parallel processing of the Convolutional Neural Network training algorithm. This enhancement significantly slashes down the time needed to train a CNN.
+The Dataset is stored in the file system of the \textbf{ImageClassifier} device. We use the device's Python environment to run the Datasplitter, the ImageClassifier, the CNNModel and the Optimizer. Furthermore, we use \textbf{Keras} \cite{chollet2015keras}, a neural networks API that provides out-of-the-box CNN implementations. The ImageClassifier deviceis equipped with a graphics processing unit (GPU). The GPU is used for parallel processing of the Convolutional Neural Network training algorithm. This enhancement significantly slashes down the time needed to train a CNN.
 
 \begin{figure}[h]
 \centering
@@ -55,11 +55,11 @@ The Dataset is stored in the file system of the \textbf{ImageClassifier} device.
 
 \section{Persistent Data Management}\label{sec:persistent_data_management}
 
-The implementation of the ImageClassifier requires the split dataset to be organized in a certain way. The file structure of the dataset is shown in figure \ref{fig:FS}. The root folder contains one folder per small part. Each folder is named after its respective small part's label. This folder, in turn, contains 3 folders: one for training images, one for validation and one for testing. Lastly, each training, validation and testing folder contains a set of images that belong to a specific small part.
+The implementation of the ImageClassifier requires the split dataset to be organized in a certain way. The file structure of the dataset is shown in figure \ref{fig:FS}. The root folder contains 3 folders: one for training images, one for validation and one for testing. Each folder, in turn, contains one folder per class, and each of these folders are named after their respective class's label. Lastly, each class folder contains a set its own images.
 
 \begin{figure}[h]
 \centering
   \includegraphics[width=0.8\textwidth]{FS}
-\caption{Dataset file structure model displaying how the split dataset is organized before being fed as input to the image classifier. Each subfolder in the Dataset root directory is named after a small part label.}
+\caption{Dataset file structure model displaying how the split dataset is organized before being fed as input to the image classifier. Each subfolder in the training/validation/testing directory is named after a small part label.}
 \label{fig:FS}
 \end{figure}
