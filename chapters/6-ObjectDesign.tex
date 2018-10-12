@@ -1,9 +1,9 @@
 \chapter{Object Design}\label{ch:object_design}
 In chapter \ref{ch:analysis}, we identified the objects in our system by creating the analysis object model. In chapter \ref{ch:system_design}, we mapped our objects to components and we defined the hardware and software platforms that host those components.
 
-During hardware/software mapping, we have identified off-the-shelf components that we used throughout our system. Namely Keras, Rhinoceros Artec Studio and Artec Space Spider. In this chapter, we close the gap between the application objects and the off-the-shelf components by identifying additional solution objects and refining existing objects \cite{bruegge2004object}.
+During hardware/software mapping, off-the-shelf components that we used throughout our system have been identified. In this chapter, we close the gap between the application objects and the off-the-shelf components by identifying additional solution objects and refining existing objects \cite{bruegge2004object}.
 
-Section \ref{sec:artec} presents the Artec Space Spider 3D scanner and the Artec Studio 3D scanning software. It also describes how they are used to create 3D models. In section \ref{sec:rhino} we present the 3D modeling software Rhinoceros and how it is used to create synthetic images. Section \ref{sec:pillow} describes Pillow the python imaging library, and how it is used to process real images. In section \ref{sec:keras}, we introduce Keras and Tensorflow, and we describe how they are used to create an image classifier. Section \ref{sec:vgg_algorithm} describes the VGG convolutional neural network algorithms used to implement the CNNModel. Finally, Section \ref{sec:adam_algorithm} presents the Adam optimization algorithm.
+Section \ref{sec:artec} presents the Artec Space Spider 3D scanner and the Artec Studio 3D scanning software. It also describes how they are used to create 3D models. Section \ref{sec:rhino} presents the 3D modeling software Rhinoceros and how it is used to create synthetic images. Section \ref{sec:pillow} describes Pillow the python imaging library, and how it is used to process real images. In section \ref{sec:keras}, we introduce Keras and Tensorflow, and we describe how they are used to create an image classifier. Section \ref{sec:vgg_algorithm} describes the VGG convolutional neural network algorithms used to implement the CNNModel. Finally, Section \ref{sec:adam_algorithm} presents the Adam optimization algorithm.
 
 
 \section{Artec Space Spider and Artec Studio}\label{sec:artec}
@@ -23,7 +23,7 @@ We choose Rhino to create our synthetic data because it has a python library cal
 \subsection{Usage}
 We use Rhino to create our synthetic scene. We set the background and the lighting conditions of the environment, then we import our 3D model and place it horizontally on the background.
 
-Furthermore, we use RhinoSyntaxScript over python to create our synthetic images. After setting up the synthetic scene in Rhino, we write a python script that executes random transformations over our 3D model. Next, we use a RhinoSyntaxScript function that renders and saves a 2D image of the scene. In the python script, we specify the desired number of output images. Rhino repeats the transformation and rendering process accordingly.
+Furthermore, RhinoSyntaxScript over python to is used to create our synthetic images. After setting up the synthetic scene in Rhino, we write a python script that executes random transformations over our 3D model. Next, a RhinoSyntaxScript function that renders and saves a 2D image is applied to the synthetic scene. In the python script, the desired number of output images is specified. Rhino repeats the transformation and rendering process accordingly.
 
 
 \section{Pillow}\label{sec:pillow}
@@ -65,6 +65,6 @@ Adam \cite{kingma2014adam} is a gradient descent optimization algorithm. It is u
 \[\hat{s_{t}}=\dfrac{s_{t}}{1 - \beta_{2}^t}\]
 \[w_{t}=w_{t-1}-\alpha\dfrac{\hat{m_{t}}}{\sqrt{\hat{s_{t}}}+\epsilon}\]
 
-where $\alpha$ is the learning rate, $\beta_1$ and $\beta_2$ are decay rates for the moving average of the gradient and the square gradient respectively, $t$ is the timestep and $\epsilon$ is a small constant (usually $10^{-8}$) used to avoid division by zero.
+where $\alpha$ is the learning rate, $\beta_1$ and $\beta_2$ are decay rates for the moving average of the gradient and the square gradient respectively, $t$ is a timestep that starts at 0 and $\epsilon$ is a small constant (usually $10^{-8}$) used to avoid division by zero.
 
 The Adam optimization algorithm is more sophisticated than the classical stochastic gradient descent. However, we use both algorithms to implement the Optimizer class, which is in turn used to update the weights of the CNNModel during the training phase.

@@ -1,13 +1,13 @@
 \chapter{Analysis}\label{ch:analysis}
 
-The analysis process results in a model of the system that aims to be correct, complete, consistent and unambiguous \cite{bruegge2004object}. In this chapter, we focus on scenario-based analysis. Section \ref{requirements}, identifies the functional and nonfunctional requiremens of the system. In section \ref{system_models}, we describe a use case model that depicts the different interactions between the users and the system. Furthermore, we identify and study the objects of our system in the Analysis Object Model. Finally we present 3 dynamic models.
+The analysis process results in a model of the system that aims to be correct, complete, consistent and unambiguous \cite{bruegge2004object}. In this chapter, we focus on scenario-based analysis. Section \ref{requirements}, identifies the functional and nonfunctional requiremens of the system. In section \ref{system_models}, we describe a use case model that depicts the different interactions between the users and the system. Furthermore, we identify and study the objects of our system in the Analysis Object Model. Finally, 3 dynamic models that depict workflows in our system are presented.
 
 
 \section{Requirements}\label{requirements}
 
 A requirement is a feature that the system must have or a constraint that it must satisfy to be accepted by the client \cite{bruegge2004object}. Requirements elicitation requires domain knowledge of the problem statement as well as experience in building software systems.
 
-We design a system that uses synthetic and real images to classify different small parts. To do so, we create 3D models of our small parts. We subsequently generate a real image set for each small part, and a synthetic image set from the small part's 3D model. The real and synthetic image sets are combined to form a dataset, which we use to train a classification model based on convolutional neural networks. In this section we define the concrete functional and nonfunctional requirements needed to build our system.
+We design a system that uses synthetic and real images to classify different small parts. To do so, we create 3D models of our small parts. We subsequently generate a real image set for each small part, and a synthetic image set from the small part's 3D model. The real and synthetic image sets are combined to form a dataset, which we use to train a classification model based on convolutional neural networks. In this section, the concrete functional and nonfunctional requirements needed to build our system are defined.
 
 \subsection{Functional Requirements}
 Functional requirements (FRs) describe the interactions between the system and the its environment independent of its implementation \cite{bruegge2004object}.
@@ -43,7 +43,7 @@ Nonfunctional Requirements (NFRs) are key system requirements that apply to the 
 
 \section{System Models}\label{system_models}
 
-In this section we take a closer look at the system models. In section \ref{use_case_model}, we establish the main actors of our system and determine the actions that they can undertake. In section \ref{analysis_object_model}, we identify the objects of our system, we examine their behaviour and we study the relationship between them. Lastly, in section \ref{dynamic_model} we present activity diagrams that describe the workflows of our system.
+In this section we take a closer look at the system models. In section \ref{use_case_model}, we establish the main actors of our system and determine the actions that they can undertake. Section \ref{analysis_object_model}, identifies the objects of our system, examines their behaviour and studies the relationship between them. Lastly, in section \ref{dynamic_model} we present activity diagrams that describe the workflows of our system.
 
 \subsection{Use Case Model}\label{use_case_model}
 Use case models represent the relationship between the user group of a system and the general functions that they can execute. A use case model can reduce the complexity of a system and increase its understandability.
