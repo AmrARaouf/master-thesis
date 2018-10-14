@@ -46,7 +46,7 @@ The \textbf{Camera} is used to capture raw images of the small parts. We use the
 
 The Dataset is stored in the file system of the \textbf{ImageClassifier} device. We use the device's Python environment to run the DatasetSplitter, the ImageClassifier, the CNNModel and the Optimizer. Furthermore, we use \textbf{Keras} \cite{chollet2015keras}, a neural networks API that provides out-of-the-box CNN implementations. The ImageClassifier device is equipped with a graphics processing unit (GPU). The GPU is used for parallel processing of the Convolutional Neural Network training algorithm. This enhancement significantly slashes down the time needed to train a CNN.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
   \includegraphics[width=\textwidth]{DD}
 \caption{System Deployment Diagram depicting the different hardware and software components used to implement our system.}
@@ -57,7 +57,7 @@ The Dataset is stored in the file system of the \textbf{ImageClassifier} device.
 
 The implementation of the ImageClassifier requires the split dataset to be organized in a certain way. The file structure of the dataset is shown in figure \ref{fig:FS}. The root folder contains 3 folders: one for training images, one for validation and one for testing. Each folder, in turn, contains one folder per class, and each of these folders are named after their respective class's label. Lastly, each class folder contains a set its own images.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
   \includegraphics[width=0.8\textwidth]{FS}
 \caption{Dataset file structure model displaying how the split dataset is organized before being fed as input to the image classifier. Each subfolder in the training/validation/testing directory is named after a small part label.}

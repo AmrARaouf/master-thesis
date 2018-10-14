@@ -17,7 +17,7 @@ Regular neural networks consist of an \textbf{input layer}, \textbf{hidden layer
 
 Convolutional neural networks (CNNs) are structured differently. CNNs have 3 types of layers: \textbf{convolution layers}, \textbf{pooling layers} and \textbf{fully connected} layers. Convolution layers slide a weighted matrix (called \textbf{filter} or \textbf{kernel}) over the previous layer, and calculate the sum of products. The size of the step that the filter takes while sliding is called a \textbf{stride}. Figure \ref{fig:CONV} shows how a convolution layer applies a 3x3 filter to the previous layer. A non-linear activation function is applied to the output of the convolution operation to create a \textbf{feature map}. It is common to add a pooling layer after the convolution layer for subsampling, which reduces the convolution layer dimensionality. A frequently used type of pooling is \textbf{max pooling} \cite{weng1992cresceptron}. Max pooling divides the input layer into sections and computes the maximum activation of each section. Figure \ref{fig:MP} shows how a max pooling layer applies a 2x2 filter to the preceding layer. Fully connected layers are similar to layers in a regular neural network. Each neuron in a fully connected layer is connected to all neurons in the previous layer.
 
-Figure \ref{fig:lenet5} shows the Lenet-5 convolutional neural network, which was designed by LeCun et al. \cite{lecun1998gradient} for handwritten digit recognition. Lenet-5 is an example of a CNN \textbf{architecture}. A CNN architecture is a set up of different types of layers which are combined to predict the class of the input image.
+Figure \ref{fig:lenet5} shows the LeNet-5 convolutional neural network, which was designed by LeCun et al. \cite{lecun1998gradient} for handwritten digit recognition. LeNet-5 is an example of a CNN \textbf{architecture}. A CNN architecture is a set up of different types of layers which are combined to predict the class of the input image.
 
 \begin{figure}[H]
 \centering
@@ -38,11 +38,11 @@ Figure \ref{fig:lenet5} shows the Lenet-5 convolutional neural network, which wa
 \begin{figure}[H]
 \centering
 \makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{lenet5}}
-\caption[Architecture of the Lenet-5 convolutional neural network.]{Architecture of the Lenet-5 convolutional neural network.\cite{lecun1989backpropagation}}
+\caption[Architecture of the LeNet-5 convolutional neural network.]{Architecture of the LeNet-5 convolutional neural network.\cite{lecun1989backpropagation}}
 \label{fig:lenet5}
 \end{figure}
 
-The Lenet-5 network uses 3x3 filters with a stride of 1 for convolution layers and 2x2 filters with a stride of 2 for subsampling layers. Lenet-5 uses \textbf{average pooling}, which calculates the average of the values in the filter.
+The LeNet-5 network uses 3x3 filters with a stride of 1 for convolution layers and 2x2 filters with a stride of 2 for subsampling layers. LeNet-5 uses \textbf{average pooling}, which calculates the average of the values in the filter.
 
 The network takes a 32x32 image as input. The first layer is a convolution layer (C1), which applies 6 filters, followed by a subsampling layer (S2). Next comes another convolution layer (C3) which applies 16 filter, followed by a subsampling layer (S4). A final convolution layer (C5) that applies 120 filters follows S4. Afterwards comes a fully connected (F6) layer with 84 neurons. Finally, an output layer of size 10 is connected to F6. Each neuron in the output layer corresponds to the probability of the input image to be one of the 10 digits (0-9).
 
@@ -77,7 +77,7 @@ Aircraft fasteners are metallic and have a shiny surface. The light reflection o
 Unlike cases where the background can provide information, the background is non-informative to the classification of small parts. Additionally, exposure to a regular lighting condition, like an overhead light in a room, causes the fasteners to cast a shadow on their background. A fastener shadow is not a discriminative feature. Both the background and the fastener shadow are a source of noise for the classifier.
 
 \subsection{Real and Synthetic Images}
-To automatically classify small parts, we build a convolutional neural network that is trained on both \textbf{real images} and \textbf{synthetic images}. We define real images as the natural images of the small parts, taken using a camera. Synthetic images, on the other hand, are artificially created images. They are 2-dimensional renditions of \textbf{3d models} of small parts. To generate synthetic images, we must create a \textbf{synthetic scene}: an artificial environment created in 3D modeling software. Figure \ref{fig:synthetic_scene} shows an example of a synthetic scene. A 3d model is placed in a synthetic scene in 3D modeling software. The software renders a 2D image of the environment to create a synthetic scene.
+To automatically classify small parts, we build a convolutional neural network that is trained on both \textbf{real images} and \textbf{synthetic images}. We define real images as the natural images of the small parts, taken using a camera. Synthetic images, on the other hand, are artificially created images. They are 2-dimensional renditions of \textbf{3D models} of small parts. To generate synthetic images, we must create a \textbf{synthetic scene}: an artificial environment created in 3D modeling software. Figure \ref{fig:synthetic_scene} shows an example of a synthetic scene. A 3D model is placed in a synthetic scene in 3D modeling software. The software renders a 2D image of the environment to create a synthetic scene.
 
 The real and synthetic images should capture the small parts and their corresponding 3D models from different angles and in different positions. To do so, we apply \textbf{transformations} to the small parts and 3D models. There are two types of transformations: \textbf{translation} to change the position of the target object, and \textbf{rotation} to change the angle. Each transformation has a range. This prevents the target objects from being translated or rotated away from the camera view.
 
