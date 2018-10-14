@@ -57,7 +57,7 @@ Figure \ref{fig:VGG_architectures} shows the different VGG architecture configur
 
 
 \section{Adam Optimization Algorithm}\label{sec:adam_algorithm}
-Adam \cite{kingma2014adam} is a gradient descent optimization algorithm. It is used during the training phase of a network to update the model weights. Adam differs than the classical stochastic gradient descent (SGD) optimizer. While SGD maintains a constant learning rate for all weight updates, Adam calculates the exponential moving average of the gradient and the squared gradient. The adam optimizer updates the weight of a network that uses the loss function $L$ as follows:
+Adam \cite{kingma2014adam} is a gradient descent optimization algorithm. It is used during the training phase of a network to update the model weights. Adam differs than the classical stochastic gradient descent (SGD) optimizer. While SGD maintains a constant learning rate for all weight updates, Adam calculates the exponential moving average of the gradient and the squared gradient. The Adam optimizer updates the weight of a network that uses the loss function $L$ as follows:
 \[g_{t}=\dfrac{\partial L}{\partial w_{t-1}}\]
 \[m_{t}=\beta_{1}\cdot m_{t-1}+(1-\beta_{1}\cdot g_{t})\]
 \[s_{t}=\beta_{2}\cdot s_{t-1}+(1-\beta_{2}\cdot g_{t}^2)\]
@@ -65,6 +65,6 @@ Adam \cite{kingma2014adam} is a gradient descent optimization algorithm. It is u
 \[\hat{s_{t}}=\dfrac{s_{t}}{1 - \beta_{2}^t}\]
 \[w_{t}=w_{t-1}-\alpha\dfrac{\hat{m_{t}}}{\sqrt{\hat{s_{t}}}+\epsilon}\]
 
-where $\alpha$ is the learning rate, $\beta_1$ and $\beta_2$ are decay rates for the moving average of the gradient and the square gradient respectively, $t$ is a timestep that starts at 0 and $\epsilon$ is a small constant (usually $10^{-8}$) used to avoid division by zero.
+where $\alpha$ is the learning rate, $\beta_1$ and $\beta_2$ are decay rates for the moving average of the gradient and the square gradient respectively, $t$ is a time-step that starts at 0 and $\epsilon$ is a small constant (usually $10^{-8}$) used to avoid division by zero.
 
 The Adam optimization algorithm is more sophisticated than the classical stochastic gradient descent. However, we use both algorithms to implement the Optimizer class, which is in turn used to update the weights of the CNNModel during the training phase.

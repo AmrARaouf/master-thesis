@@ -15,7 +15,7 @@ Our methodology is divided into 2 main parts: Dataset Generation and Image Class
 
 \subsection{Dataset Generation}
 
-During dataset generation, we strive to create a synthetic dataset that has a high degree of photo-realism. Simultaniously, we want to create 3D models as fast as possible to decrease the timing of the whole workflow. To achieve this balance, we aim to create an environment that is easy to model on 3D software. We attempt to eliminate light reflections and shadows and reduce the overall complexity of the scene.
+During dataset generation, we strive to create a synthetic dataset that has a high degree of photo-realism. Simultaneously, we want to create 3D models as fast as possible to decrease the timing of the whole workflow. To achieve this balance, we aim to create an environment that is easy to model on 3D software. We attempt to eliminate light reflections and shadows and reduce the overall complexity of the scene.
 
 \subsubsection{Creating 3D Models}
 We first choose a small part that we wish for our image classifier to recognize. A 3D scanner is used to create a 3D model of the chosen small part.
@@ -34,12 +34,12 @@ To counter this problem, readily available 3D models are obtained. We download 3
 \begin{figure}[H]
 \centering
   \includegraphics[width=\textwidth]{dataset}
-\caption{Samples of images for each class that we use in our experiments. For each pair, the image on the left is a sample real image, while the image on the right is a sample synthetic imahe. The label under each image pair is the label we assign to the class.}
+\caption{Samples of images for each class that we use in our experiments. For each pair, the image on the left is a sample real image, while the image on the right is a sample synthetic image. The label under each image pair is the label we assign to the class.}
 \label{fig:Dataset}
 \end{figure}
 
 \subsubsection{Generating Real Images}
-We place the chosen small part on a horizontal plane and place a light source underneath. A plain, white, semi-transparent plane as used as background to disperse the light source coming from underneath, and distribute the light evenly accross the plane. We place the light source beneath the plane, rather than above, to eliminate any shadow that the small parts might cast. Moreover the dispersed back light provides a lighting source without casting a direct light on the objects, which might cause glare on the small part's reflective surface.
+We place the chosen small part on a horizontal plane and place a light source underneath. A plain, white, semi-transparent plane as used as background to disperse the light source coming from underneath, and distribute the light evenly across the plane. We place the light source beneath the plane, rather than above, to eliminate any shadow that the small parts might cast. Moreover the dispersed back light provides a lighting source without casting a direct light on the objects, which might cause glare on the small part's reflective surface.
 
 Next, an iPhone is placed over the plane, such that the small object is fully within the viewfield of the iPhone's camera. A wooden setup places the iPhone 133 mm over the plane as shown in figure [\ref{fig:RealSetup}].
 
@@ -50,10 +50,10 @@ Lastly, the raw real images taken by the iPhone camera are resized to conform wi
 \subsubsection{Generating Synthetic Images}
 We start by creating the synthetic scene in the Rhinoceros 3D modeling software. First, a picture of the real horizontal plane is taken and used as a background for our synthetic scene. A synthetic lighting source is placed underneath the plane to mimic the lighting effect of the real environment. Next, the 3D model is placed on the horizontal plane of the environment.
 
-Next, we generate a python script that uses the Rhinoceros library to manipulate 3D objects in the Rhinoceros software. The python script is the controller for the synthetic data genertor. The synthetic data generator obtains the rotation and translation ranges of the 3D model. It also specifies how many images are to be generated. For each new image, the script generates a random rotation and translation value from within the defined ranges. It then applies those transformation to the 3D model and renders a new 2D synthetic image.
+Next, we generate a python script that uses the Rhinoceros library to manipulate 3D objects in the Rhinoceros software. The python script is the controller for the synthetic data generator. The synthetic data generator obtains the rotation and translation ranges of the 3D model. It also specifies how many images are to be generated. For each new image, the script generates a random rotation and translation value from within the defined ranges. It then applies those transformation to the 3D model and renders a new 2D synthetic image.
 
 \subsubsection{Dataset}
-The real images generated from the small part and the synthetic images generated from the corresponding 3D model are transfered to the Training Machine where they are placed in the dataset folder.
+The real images generated from the small part and the synthetic images generated from the corresponding 3D model are transferred to the Training Machine where they are placed in the dataset folder.
 
 \begin{figure}[H]
 \centering
@@ -71,7 +71,7 @@ The real images generated from the small part and the synthetic images generated
 
 \subsection{Image Classification}
 
-The image classifier uses the images that were generate to train a convolutional neural network model to classify images of our small parts. We describe the different dataset splits that were used in our experiment. Furthermore, we present the convlutional neural models and optimizers used for image classification.
+The image classifier uses the images that were generate to train a convolutional neural network model to classify images of our small parts. We describe the different dataset splits that were used in our experiment. Furthermore, we present the convolutional neural models and optimizers used for image classification.
 
 \subsubsection{Dataset Splitting}
 Firstly, the dataset is split into a training set, a validation set and a testing set. Moreover, we determine the number of synthetic images and the number of real images in our training set. The data split generator organizes the images in folder named after the label of their respective small part. The images are organized as shown in figure \ref{fig:FS}.
@@ -94,13 +94,13 @@ $\boldsymbol{R_{100}S_{0}}$ & 0 & 600 & 600 & 100 & 100 \\ \hline
 \end{table}
 
 \subsubsection{CNN Model}
-For each data split, the VGG16 and the VGG19 \cite{simonyan2014very} convolutional neural network models are used. Moreover, the Stochastic Gradient Descent (SGD) and the Adam optimization algorithms \cite{kingma2014adam} are used to optimize the network weights. We leverage the power of transfer learning \cite{pan2010survey} by using CNN models that are pre-trained on the imagenet dataset \cite{ILSVRC15}. Furthermore, our CNN models are tweaked to train and evaluate images of size 500px by 500px.
+For each data split, the VGG16 and the VGG19 \cite{simonyan2014very} convolutional neural network models are used. Moreover, the Stochastic Gradient Descent (SGD) and the Adam optimization algorithms \cite{kingma2014adam} are used to optimize the network weights. We leverage the power of transfer learning \cite{pan2010survey} by using CNN models that are pre-trained on the ImageNet dataset \cite{ILSVRC15}. Furthermore, our CNN models are tweaked to train and evaluate images of size 500px by 500px.
 
 \subsubsection{Hyperparameter Tuning}
 For each split dataset, the hyperparameters of the CNN model and the optimizer are fine tuned to maximize the classification accuracy of the output. Below is a list of hyperparameters that are optimized in the fine-tuning phase.
 
 \begin{itemize}
-  \item \textbf{Number of Frozen Layers}: Our CNN models are pre-trained on the imagenet dataset, which means that each layer is preloaded with optimized weights. During training, some of the early network layers are frozen to preserve these optimized weights. We optimize our classification accuracy by fine tuning the number of frozen layers.
+  \item \textbf{Number of Frozen Layers}: Our CNN models are pre-trained on the ImageNet dataset, which means that each layer is pre-loaded with optimized weights. During training, some of the early network layers are frozen to preserve these optimized weights. We optimize our classification accuracy by fine tuning the number of frozen layers.
   \\For VGG16, the first 10 or 14 layers are frozen. For VGG19, the first 12 or 16 layers are frozen.
   \item \textbf{Batch Size}: During training, our CNN model processes the training set in batches. We fine tune our batch size between 4, 8 and 16.
   \item \textbf{Number of Epochs}: Due to the iterative nature of the training process, a CNN has to train for multiple epochs until it reaches maximum classification accuracy. We train each model for 30 epochs and observe the peak accuracy during this range.
@@ -110,7 +110,7 @@ For each split dataset, the hyperparameters of the CNN model and the optimizer a
 
 \section{Results}\label{sec:results}
 
-Tables \ref{tab:vgg16-results} and \ref{tab:vgg19-results} provide the resulting class-wise classification accuracies of training a VGG16 network and a VGG19 network respectively. The displayed results are reached after fine-tuning the hyperparameters described in the previous section. The provided classification accuracy is the result of evaluating each CNN model using the respective testing set.
+Tables \ref{tab:vgg16-results} and \ref{tab:vgg19-results} provide the resulting class-wise classification accuracy of training a VGG16 network and a VGG19 network respectively. The displayed results are reached after fine-tuning the hyperparameters described in the previous section. The provided classification accuracy is the result of evaluating each CNN model using the respective testing set.
 
 
 \section{Findings}\label{sec:findings}
@@ -152,4 +152,4 @@ $\boldsymbol{R_{100}S_{0}}$ & 100.00 & 100.000 & 100.000 & 100.000 & 99.000 & 97
 
 \section{Limitations}\label{sec:limitations}
 
-Our system is dependant on having access to the 3D model of the small parts in order to generate synthetic images. Moreover, the model's classification accuracy is dependant on the shapes of the small parts. As observed in the previous section, the class-wise accuracy for an object that is similar to other objects in the dataset is lower than an object that is aesthetically unique.
+Our system is dependent on having access to the 3D model of the small parts in order to generate synthetic images. Moreover, the model's classification accuracy is dependent on the shapes of the small parts. As observed in the previous section, the class-wise accuracy for an object that is similar to other objects in the dataset is lower than an object that is aesthetically unique.
