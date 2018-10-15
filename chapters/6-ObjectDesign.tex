@@ -1,7 +1,5 @@
 \chapter{Object Design}\label{ch:object_design}
-In chapter \ref{ch:analysis}, we identified the objects in our system by creating the analysis object model. In chapter \ref{ch:system_design}, we mapped our objects to components and we defined the hardware and software platforms that host those components.
-
-During hardware/software mapping, off-the-shelf components that we used throughout our system have been identified. In this chapter, we close the gap between the application objects and the off-the-shelf components by identifying additional solution objects and refining existing objects \cite{bruegge2004object}.
+In chapter \ref{ch:analysis}, we identified the objects in our system by creating the analysis object model. In chapter \ref{ch:system_design}, we mapped our objects to components and we defined the hardware and software platforms that host those components. During hardware/software mapping, off-the-shelf components that we use throughout our system have been identified. In this chapter, we close the gap between the application objects and the off-the-shelf components by identifying additional solution objects and refining existing objects \cite{bruegge2004object}.
 
 Section \ref{sec:artec} presents the Artec Space Spider 3D scanner and the Artec Studio 3D scanning software. It also describes how they are used to create 3D models. Section \ref{sec:rhino} presents the 3D modeling software Rhinoceros and how it is used to create synthetic images. Section \ref{sec:pillow} describes Pillow the python imaging library, and how it is used to process real images. In section \ref{sec:keras}, we introduce Keras and Tensorflow, and we describe how they are used to create an image classifier. Section \ref{sec:vgg_algorithm} describes the VGG convolutional neural network algorithms used to implement the CNNModel. Finally, Section \ref{sec:adam_algorithm} presents the Adam optimization algorithm.
 
@@ -12,7 +10,7 @@ Artec Space Spider\footnote{https://www.artec3d.com/portable-3d-scanners/artec-s
 Artec Studio\footnote{https://www.artec3d.com/3d-software/artec-studio} is a 3D scanning and data processing software. It is used hand in hand with the Artec Space Spider 3D scanner to create 3D models.
 
 \subsection{Usage}
-We use the Artec Space Spider 3D scanner to scan our small part from multiple angles. The different scans are then sent to Artec Studio for processing. Artec Studio provides a functionality that detects features in multiple scans and automatically combines the scans to form a 3D model. Moreover, Artec Studio automatically removes outlier points in the scans and. We also used Artec Studio to identify the horizontal plane where the small part was lying during the scan. The plane is then removed from the output 3D model. After the scans have been combined to construct a 3D model, Artec Studio automatically fills the holes in the object where there are missing scans.
+We use the Artec Space Spider 3D scanner to scan our small part from multiple angles. The different scans are then sent to Artec Studio for processing. Artec Studio provides a functionality that detects features in multiple scans and automatically combines the scans to form a 3D model. Moreover, Artec Studio automatically removes outlier points in the scans. We also use Artec Studio to identify the horizontal plane where the small part was lying during the scan. The plane is then removed from the output 3D model. After the scans have been combined to construct a 3D model, Artec Studio automatically fills the holes in the object where there are missing scans.
 
 
 \section{Rhinoceros}\label{sec:rhino}
@@ -36,7 +34,7 @@ Keras is a high-level neural networks API, written in Python and capable of runn
 Our system runs Keras over Tensorflow. Tensorflow is an open source software library for high performance numerical computation and a machine learning framework \cite{tensorflow2015-whitepaper}. Tensorflow is a flexible library that can be used to express neural network algorithms in a wide variety of domains.
 
 \subsection{Usage}
-Keras provides an out-of-the-box implementation of different CNN models, optimizers and cost functions. We took advantage of Keras's modular components to build and fine tune our CNN models and their respective optimizers with ease.
+Keras provides an out-of-the-box implementation of different CNN models, optimizers and cost functions. We took advantage of Keras's modular components to build and fine tune our CNN models and their respective optimizers.
 
 Furthermore, Keras provides an image loader, called \textit{ImageDataGenerator}. ImageDataGenerator feeds the training, validation and testing data to the CNN models from a folder directory. Consequently, we built our DatasetSplitter using Keras's image loader.
 
