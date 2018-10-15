@@ -58,7 +58,7 @@ The real images generated from the small part and the synthetic images generated
 \begin{figure}[H]
 \centering
   \includegraphics[width=\textwidth]{real_setup}
-\caption{Sketch of the setup to generate real images. A clamp places the iPhone over a horizontal, backlit glass table with opal foils. The small part rests on the table within the viewfield of the iPhone camera.}
+\caption{Sketch of the setup to generate real images. A clamp places the iPhone over a horizontal, backlit glass table with an opal foil. The small part rests on the table within the viewfield of the iPhone camera.}
 \label{fig:RealSetup}
 \end{figure}
 
@@ -115,7 +115,7 @@ Tables \ref{tab:vgg16-results} and \ref{tab:vgg19-results} provide the resulting
 
 \section{Findings}\label{sec:findings}
 
-In our experiments, purely synthetic training sets are found to generate inferior results compared to purely real training sets. A VGG16 model trained on the $\boldsymbol{R_{0}S_{100}}$ dataset has a classification accuracy of 83.556\%, a whole 16.444\% less that a VGG16 model trained on the $\boldsymbol{R_{100}S_{0}}$ dataset. However, A VGG16 trained on a training set with 10\% real data produces comparable results to a training set with purely real data. We note that while using $\boldsymbol{R_{100}S_{0}}$ dataset, the VGG16 network reached an accuracy of 100\%, while using the $\boldsymbol{R_{10}S_{90}}$ dataset resulted in an accuracy of 97.037\%. Moreover, the VGG19 network achieved an accuracy of 99.333\% using the $\boldsymbol{R_{100}S_{0}}$ dataset, compared to an accuracy of 97.222\% as a result of using the $\boldsymbol{R_{5}S_{95}}$ dataset.
+In our experiments, purely synthetic training sets are found to generate inferior results compared to purely real training sets. A VGG16 model trained on the $\boldsymbol{R_{0}S_{100}}$ dataset has an accuracy of 83.556\%, a whole 16.444\% less that a VGG16 model trained on the $\boldsymbol{R_{100}S_{0}}$ dataset. However, A VGG16 trained on a training set with 10\% real data produces comparable results to a training set with purely real data. We note that while using $\boldsymbol{R_{100}S_{0}}$ dataset, the VGG16 network reached an accuracy of 100\% on the test set, while using the $\boldsymbol{R_{10}S_{90}}$ dataset resulted in an accuracy of 97.037\%. Moreover, the VGG19 network achieved an accuracy of 99.333\% using the $\boldsymbol{R_{100}S_{0}}$ dataset, compared to an accuracy of 97.222\% as a result of using the $\boldsymbol{R_{5}S_{95}}$ dataset.
 
 Furthermore, we notice that the small parts with the highest class-wise accuracy are \textit{Flat Head} and \textit{Longhex Large}. Compared to their counterparts, those two small parts have a unique aesthetic. Hex Large and Hex small look similar, and the same goes for Mushroom Large and Mushroom Small.
 
